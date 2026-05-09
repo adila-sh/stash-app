@@ -1,0 +1,13 @@
+{
+  "files.exclude": {
+    "tsconfig.app.tsbuildinfo": true,
+    "tsconfig.node.tsbuildinfo": true,
+    "bun.lock": true,
+    "tsconfig.app.json": true,
+    "tsconfig.node.json": true,
+    "tsconfig.json": true,
+    "vite.config.ts": true,
+    "node_modules": true,
+    "dist": true
+  }
+}

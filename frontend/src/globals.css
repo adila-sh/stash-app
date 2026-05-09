@@ -1,0 +1,159 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@font-face {
+  font-family: "Google Sans Code";
+  src: url("/Google_Sans_Code/GoogleSansCode-VariableFont_MONO,wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Google Sans Code";
+  src: url("/Google_Sans_Code/GoogleSansCode-Italic-VariableFont_MONO,wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@custom-variant dark (&:where([data-theme="ultra-dark"], [data-theme="ultra-dark"] *));
+
+/* Ultra Dark — pitch-black tech */
+:root,
+[data-theme="ultra-dark"] {
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.96 0 0);
+  --card: oklch(0.04 0 0);
+  --card-foreground: oklch(0.96 0 0);
+  --popover: oklch(0.06 0 0);
+  --popover-foreground: oklch(0.96 0 0);
+  --primary: oklch(0.96 0 0);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.12 0 0);
+  --secondary-foreground: oklch(0.96 0 0);
+  --muted: oklch(0.1 0 0);
+  --muted-foreground: oklch(0.6 0 0);
+  --accent: oklch(0.14 0 0);
+  --accent-foreground: oklch(0.96 0 0);
+  --destructive: oklch(0.65 0.24 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(1 0 0 / 30%);
+  --radius: 0;
+
+  /* git status colors — vivid on black */
+  --added: oklch(0.78 0.2 145);
+  --modified: oklch(0.82 0.18 80);
+  --deleted: oklch(0.7 0.24 22);
+  --untracked: oklch(0.72 0.16 240);
+}
+
+/* Ultra White — bright tech */
+[data-theme="ultra-white"] {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.04 0 0);
+  --card: oklch(0.98 0 0);
+  --card-foreground: oklch(0.04 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.04 0 0);
+  --primary: oklch(0.04 0 0);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.94 0 0);
+  --secondary-foreground: oklch(0.04 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.45 0 0);
+  --accent: oklch(0.93 0 0);
+  --accent-foreground: oklch(0.04 0 0);
+  --destructive: oklch(0.55 0.24 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0 0 0 / 12%);
+  --input: oklch(0 0 0 / 14%);
+  --ring: oklch(0 0 0 / 30%);
+  --radius: 0;
+
+  --added: oklch(0.55 0.2 145);
+  --modified: oklch(0.65 0.18 80);
+  --deleted: oklch(0.5 0.24 25);
+  --untracked: oklch(0.5 0.16 240);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-added: var(--added);
+  --color-modified: var(--modified);
+  --color-deleted: var(--deleted);
+  --color-untracked: var(--untracked);
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --font-sans:
+    "Google Sans Code", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-mono:
+    "Google Sans Code", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    border-radius: 0 !important;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+    background: transparent;
+  }
+
+  body {
+    @apply text-foreground antialiased;
+    font-family: var(--font-sans);
+    font-variation-settings: "MONO" 1;
+    overscroll-behavior: none;
+    user-select: none;
+  }
+
+  code,
+  pre,
+  .font-mono {
+    font-family: var(--font-mono);
+    font-variation-settings: "MONO" 1;
+  }
+
+  /* Tech UI: scrollbars */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ring);
+  }
+}
