@@ -25,7 +25,13 @@ function ChangesView() {
     unstageMany,
     discardMany,
     commit,
+    pushCurrent,
+    currentAheadBehind,
+    branches,
   } = useRepo();
+
+  const currentBranch = branches.find((b) => b.isCurrent);
+  const hasUpstream = !!currentBranch?.upstream;
 
   return (
     <>
@@ -46,6 +52,9 @@ function ChangesView() {
           onUnstageMany={unstageMany}
           onDiscardMany={discardMany}
           onCommit={commit}
+          onPush={pushCurrent}
+          aheadCount={currentAheadBehind?.ahead ?? 0}
+          hasUpstream={hasUpstream}
           busy={statusBusy}
         />
       </ResizableX>
