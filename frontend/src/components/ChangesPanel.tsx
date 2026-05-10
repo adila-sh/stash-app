@@ -4,6 +4,7 @@ import {
   Check,
   ChevronDown,
   ChevronRight,
+  CloudUpload,
   Loader2,
   Minus,
   Plus,
@@ -31,6 +32,9 @@ interface Props {
   onUnstageMany: (files: FileChange[]) => Promise<void>;
   onDiscardMany: (files: FileChange[]) => Promise<void>;
   onCommit: (message: string) => Promise<void>;
+  onPush?: () => Promise<void>;
+  aheadCount?: number;
+  hasUpstream?: boolean;
   busy: boolean;
 }
 
@@ -51,11 +55,15 @@ export function ChangesPanel({
   onUnstageMany,
   onDiscardMany,
   onCommit,
+  onPush,
+  aheadCount = 0,
+  hasUpstream = false,
   busy,
 }: Props) {
   const [message, setMessage] = useState("");
   const [committing, setCommitting] = useState(false);
   const [justCommitted, setJustCommitted] = useState(false);
+  const [pushing, setPushing] = useState(false);
   const [selection, setSelection] = useState<Set<string>>(new Set());
   const [pendingDiscard, setPendingDiscard] = useState<FileChange[] | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -181,6 +189,18 @@ export function ChangesPanel({
       setTimeout(() => setJustCommitted(false), 900);
     } finally {
       setCommitting(false);
+    }
+  }
+
+  const pushMode = stagedCount === 0 && hasUpstream && aheadCount > 0 && !!onPush;
+
+  async function pushNow() {
+    if (!onPush || pushing) return;
+    setPushing(true);
+    try {
+      await onPush();
+    } finally {
+      setPushing(false);
     }
   }
 
@@ -353,17 +373,23 @@ export function ChangesPanel({
           onKeyDown={(e) => {
             if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
               e.preventDefault();
-              void submit();
+              if (pushMode) void pushNow();
+              else void submit();
             }
           }}
           rows={3}
           className="resize-none border-border text-[12px]"
+          disabled={pushMode}
         />
         <motion.button
           type="button"
-          disabled={!message.trim() || stagedCount === 0 || committing}
-          onClick={() => void submit()}
-          title="Commit (⌘↵)"
+          disabled={
+            pushMode
+              ? pushing
+              : !message.trim() || stagedCount === 0 || committing
+          }
+          onClick={() => (pushMode ? void pushNow() : void submit())}
+          title={pushMode ? "Push (⌘↵)" : "Commit (⌘↵)"}
           whileTap={{ scale: 0.96 }}
           animate={
             justCommitted
@@ -371,7 +397,12 @@ export function ChangesPanel({
               : { scale: 1 }
           }
           transition={{ type: "spring", stiffness: 600, damping: 28 }}
-          className="relative mt-2 flex h-11 w-full items-center justify-between overflow-hidden border border-border bg-foreground px-3 text-[11px] font-medium uppercase tracking-[0.1em] text-background transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-30"
+          className={cn(
+            "relative mt-2 flex h-11 w-full items-center justify-between overflow-hidden border px-3 text-[11px] font-medium uppercase tracking-[0.1em] transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-30",
+            pushMode
+              ? "border-primary bg-primary text-primary-foreground"
+              : "border-border bg-foreground text-background",
+          )}
         >
           <AnimatePresence>
             {justCommitted && (
@@ -386,7 +417,29 @@ export function ChangesPanel({
             )}
           </AnimatePresence>
           <AnimatePresence mode="wait" initial={false}>
-            {committing ? (
+            {pushMode ? (
+              <motion.span
+                key={pushing ? "push-loading" : "push-idle"}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.16 }}
+                className="relative z-10 flex w-full items-center justify-between"
+              >
+                <span className="flex items-center gap-1.5">
+                  {pushing ? (
+                    <Loader2 className="size-3.5 animate-spin" />
+                  ) : (
+                    <CloudUpload className="size-3.5" />
+                  )}
+                  <span>Push {aheadCount}</span>
+                </span>
+                <KbdGroup className="opacity-70">
+                  <Kbd className="bg-primary-foreground/20 text-primary-foreground">⌘</Kbd>
+                  <Kbd className="bg-primary-foreground/20 text-primary-foreground">↵</Kbd>
+                </KbdGroup>
+              </motion.span>
+            ) : committing ? (
               <motion.span
                 key="loading"
                 initial={{ opacity: 0, y: 4 }}
