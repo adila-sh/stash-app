@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Pre-commit hook: gofmt + oxlint + oxfmt nos arquivos staged.
+# Ativar: task setup:hooks  (ou git config core.hooksPath .githooks)
+set -euo pipefail
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR)
+if [ -z "$STAGED" ]; then
+  exit 0
+fi
+
+fail() {
+  echo "" >&2
+  echo "✖ pre-commit: $1" >&2
+  exit 1
+}
+
+# --- Go (raiz) -------------------------------------------------------------
+GO_FILES=$(echo "$STAGED" | grep -E '\.go$' | grep -vE '^frontend/' || true)
+if [ -n "$GO_FILES" ]; then
+  if ! command -v gofmt >/dev/null 2>&1; then
+    fail "gofmt não encontrado no PATH"
+  fi
+  UNFORMATTED=$(gofmt -l $GO_FILES || true)
+  if [ -n "$UNFORMATTED" ]; then
+    echo "Arquivos Go fora de formato:" >&2
+    echo "$UNFORMATTED" >&2
+    fail "rode: gofmt -w <arquivo>"
+  fi
+fi
+
+# --- Frontend --------------------------------------------------------------
+FE_FILES=$(echo "$STAGED" | grep -E '^frontend/.*\.(ts|tsx|js|jsx|mjs|cjs|css)$' || true)
+if [ -n "$FE_FILES" ]; then
+  if ! command -v bunx >/dev/null 2>&1; then
+    fail "bunx não encontrado no PATH (instale Bun)"
+  fi
+  # Caminhos relativos a frontend/
+  REL=$(echo "$FE_FILES" | sed 's|^frontend/||')
+  (cd frontend && bunx --bun oxlint $REL) || fail "oxlint falhou"
+  (cd frontend && bunx --bun oxfmt --check $REL) || fail "oxfmt --check falhou (rode: bun run --cwd frontend format)"
+fi
+
+exit 0

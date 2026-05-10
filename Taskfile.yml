@@ -34,6 +34,13 @@ tasks:
     cmds:
       - wails3 dev -config ./build/config.yml -port {{.VITE_PORT}}
 
+  setup:hooks:
+    summary: Ativa os git hooks do repositório (.githooks/)
+    cmds:
+      - git config core.hooksPath .githooks
+      - chmod +x .githooks/pre-commit
+      - echo "✓ pre-commit ativo (gofmt + oxlint + oxfmt nos arquivos staged)"
+
   dev:prepare:
     summary: Generates bindings and builds the Go binary only (skips Vite build in dev)
     cmds:
