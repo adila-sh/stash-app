@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Minus, Square, SquareStack, X } from "lucide-react";
 
 import { Logo } from "@/components/Logo";
+import { WindowMenu } from "@/components/WindowMenu";
 import { cn } from "@/lib/utils";
 
 const DRAG_STYLE = { "--wails-draggable": "drag" } as React.CSSProperties;
@@ -35,6 +36,7 @@ export function WindowTitleBar({ title = "stash" }: { title?: string }) {
     >
       <Logo className="h-6 w-auto" />
       <span className="font-medium uppercase tracking-[0.12em] text-muted-foreground">{title}</span>
+      <WindowMenu />
       <div style={NO_DRAG_STYLE} className="ml-auto flex items-stretch">
         <TitleBarButton onClick={() => void Window.Minimise()} aria-label="Minimizar">
           <Minus className="size-3.5" />
