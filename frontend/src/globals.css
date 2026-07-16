@@ -208,13 +208,6 @@
   [data-diff-style="inline"] .diff-line-content-item:has([data-operator="-"]) {
     border-left-color: var(--deleted);
   }
-
-  /* Radix ScrollArea envolve filhos em um div com display:table que cresce
-     com o conteúdo, quebrando truncate. Força block para que o filho respeite
-     a largura do viewport e `truncate` funcione. */
-  [data-radix-scroll-area-viewport] > div {
-    display: block !important;
-  }
 }
 
 /* Markdown — fora de @layer para vencer o reset do Tailwind preflight (que zera

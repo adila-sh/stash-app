@@ -106,7 +106,10 @@ export function ChangesPanel({
   }, [selection, fileByKey]);
 
   const selectedFiles = useMemo(
-    () => Array.from(validSelection).map((k) => fileByKey.get(k)!).filter(Boolean),
+    () =>
+      Array.from(validSelection)
+        .map((k) => fileByKey.get(k)!)
+        .filter(Boolean),
     [validSelection, fileByKey],
   );
 
@@ -383,11 +386,7 @@ export function ChangesPanel({
         />
         <motion.button
           type="button"
-          disabled={
-            pushMode
-              ? pushing
-              : !message.trim() || stagedCount === 0 || committing
-          }
+          disabled={pushMode ? pushing : !message.trim() || stagedCount === 0 || committing}
           onClick={() => (pushMode ? void pushNow() : void submit())}
           title={pushMode ? "Push (⌘↵)" : "Commit (⌘↵)"}
           whileTap={{ scale: 0.96 }}
@@ -537,11 +536,7 @@ function FileGroup({
           className="flex items-center gap-1.5 transition-colors hover:text-foreground"
           title={collapsed ? "Expandir" : "Recolher"}
         >
-          {collapsed ? (
-            <ChevronRight className="size-3" />
-          ) : (
-            <ChevronDown className="size-3" />
-          )}
+          {collapsed ? <ChevronRight className="size-3" /> : <ChevronDown className="size-3" />}
           <span>{label}</span>
         </button>
         <span className="flex items-center gap-1">
@@ -573,8 +568,9 @@ function FileGroup({
           )}
           <Checkbox
             className="ml-1"
-            checked={allSelected ? true : someSelected ? "indeterminate" : false}
-            onCheckedChange={(v) => onSetGroupSel(files, v === true)}
+            checked={allSelected}
+            indeterminate={someSelected}
+            onCheckedChange={(v) => onSetGroupSel(files, v)}
             title="Selecionar todos"
             aria-label="Selecionar todos"
           />
@@ -594,9 +590,7 @@ function FileGroup({
                     isSelected && "bg-accent",
                   )}
                 >
-                  {isSelected && (
-                    <span className="absolute inset-y-0 left-0 w-0.5 bg-foreground" />
-                  )}
+                  {isSelected && <span className="absolute inset-y-0 left-0 w-0.5 bg-foreground" />}
                   <Checkbox
                     checked={isChecked}
                     onCheckedChange={() => onToggleSel(k)}
