@@ -2,21 +2,20 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Browser } from "@wailsio/runtime";
 import {
-  AlertCircle,
-  ArrowLeft,
-  Check,
-  ChevronDown,
-  ExternalLink,
-  GitCommit,
-  GitMerge,
-  GitPullRequest,
-  GitPullRequestClosed,
-  Loader2,
-  MessageSquare,
-  RefreshCw,
-  Send,
-  X,
-} from "lucide-react";
+  ArrowClockwiseIcon,
+  ArrowLeftIcon,
+  ArrowSquareOutIcon,
+  CaretDownIcon,
+  ChatIcon,
+  CheckIcon,
+  CircleNotchIcon,
+  GitCommitIcon,
+  GitMergeIcon,
+  GitPullRequestIcon,
+  PaperPlaneRightIcon,
+  WarningCircleIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 
 import { GithubErrorBanner } from "@/components/GithubErrorBanner";
 import { Markdown } from "@/components/Markdown";
@@ -99,7 +98,7 @@ function PullRequestDetailView() {
   if (authLoading) {
     return (
       <div className="flex flex-1 items-center justify-center">
-        <Loader2 className="size-4 animate-spin text-muted-foreground" />
+        <CircleNotchIcon className="size-4 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -123,7 +122,7 @@ function PullRequestDetailView() {
   if (loading && !detail) {
     return (
       <div className="flex flex-1 items-center justify-center">
-        <Loader2 className="size-4 animate-spin text-muted-foreground" />
+        <CircleNotchIcon className="size-4 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -157,19 +156,19 @@ function PullRequestDetailView() {
       />
       <div className="flex shrink-0 items-center border-b border-border bg-card text-[11px]">
         <TabButton active={tab === "about"} onClick={() => setTab("about")}>
-          <MessageSquare className="size-3" />
+          <ChatIcon className="size-3" />
           Sobre
           <span className="ml-1 text-muted-foreground tabular-nums">
             {detail.commentsCount + reviews.length}
           </span>
         </TabButton>
         <TabButton active={tab === "commits"} onClick={() => setTab("commits")}>
-          <GitCommit className="size-3" />
+          <GitCommitIcon className="size-3" />
           Commits
           <span className="ml-1 text-muted-foreground tabular-nums">{detail.commits}</span>
         </TabButton>
         <TabButton active={tab === "files"} onClick={() => setTab("files")}>
-          <GitPullRequest className="size-3" />
+          <GitPullRequestIcon className="size-3" />
           Arquivos
           <span className="ml-1 text-muted-foreground tabular-nums">{detail.changedFiles}</span>
         </TabButton>
@@ -235,7 +234,7 @@ function Header({
           className="flex size-6 shrink-0 items-center justify-center text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           title="Voltar"
         >
-          <ArrowLeft className="size-3.5" />
+          <ArrowLeftIcon className="size-3.5" />
         </button>
         <span
           className={cn(
@@ -250,7 +249,10 @@ function Header({
         <span className="min-w-0 flex-1 truncate text-foreground" title={detail.title}>
           {detail.title}
         </span>
-        <span className="hidden shrink-0 truncate text-muted-foreground/60 sm:inline" title={`${owner}/${repo}`}>
+        <span
+          className="hidden shrink-0 truncate text-muted-foreground/60 sm:inline"
+          title={`${owner}/${repo}`}
+        >
           {owner}/{repo}
         </span>
         {showMerge && (
@@ -269,7 +271,7 @@ function Header({
           className="flex size-6 shrink-0 items-center justify-center text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           title="Abrir no GitHub"
         >
-          <ExternalLink className="size-3" />
+          <ArrowSquareOutIcon className="size-3" />
         </button>
         <button
           type="button"
@@ -279,9 +281,9 @@ function Header({
           title="Atualizar"
         >
           {loading ? (
-            <Loader2 className="size-3 animate-spin" />
+            <CircleNotchIcon className="size-3 animate-spin" />
           ) : (
-            <RefreshCw className="size-3" />
+            <ArrowClockwiseIcon className="size-3" />
           )}
         </button>
       </div>
@@ -369,7 +371,11 @@ function MergeButton({
             : `Mesclar via ${methodLabel(method)}`
         }
       >
-        {busy ? <Loader2 className="size-3 animate-spin" /> : <GitMerge className="size-3" />}
+        {busy ? (
+          <CircleNotchIcon className="size-3 animate-spin" />
+        ) : (
+          <GitMergeIcon className="size-3" />
+        )}
         <span className="font-medium">Mesclar</span>
       </button>
       <button
@@ -384,7 +390,7 @@ function MergeButton({
           "disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-emerald-600/10",
         )}
       >
-        <ChevronDown className="size-3" />
+        <CaretDownIcon className="size-3" />
       </button>
       {open && (
         <div className="absolute right-0 top-full z-20 mt-1 flex min-w-[200px] flex-col border border-border bg-popover py-1 text-[11px] shadow-md">
@@ -400,7 +406,7 @@ function MergeButton({
               className="flex items-center justify-between gap-2 px-2 py-1.5 text-left transition-colors hover:bg-accent disabled:opacity-40"
             >
               <span>{methodLabel(m)}</span>
-              {method === m && <Check className="size-3 text-muted-foreground" />}
+              {method === m && <CheckIcon className="size-3 text-muted-foreground" />}
             </button>
           ))}
           {dirty && (
@@ -408,9 +414,7 @@ function MergeButton({
               Estado: {mergeableState}
             </div>
           )}
-          {err && (
-            <div className="border-t border-border px-2 py-1 text-destructive">{err}</div>
-          )}
+          {err && <div className="border-t border-border px-2 py-1 text-destructive">{err}</div>}
         </div>
       )}
     </div>
@@ -523,11 +527,7 @@ function AboutCard({ detail }: { detail: PullRequestDetail }) {
       <div className="flex items-center gap-2">
         <span className="text-muted-foreground/60">Autor</span>
         {detail.avatarUrl && (
-          <img
-            src={detail.avatarUrl}
-            alt=""
-            className="size-4 rounded-full border border-border"
-          />
+          <img src={detail.avatarUrl} alt="" className="size-4 rounded-full border border-border" />
         )}
         <span className="truncate">{detail.author}</span>
       </div>
@@ -605,11 +605,7 @@ function ReviewBubble({
     <article className={cn("flex flex-col border bg-card", meta.borderClass)}>
       <header className="flex items-center gap-2 border-b border-border px-3 py-2 text-[11px]">
         {review.avatarUrl && (
-          <img
-            src={review.avatarUrl}
-            alt=""
-            className="size-5 rounded-full border border-border"
-          />
+          <img src={review.avatarUrl} alt="" className="size-5 rounded-full border border-border" />
         )}
         <span className={cn("font-medium", isSelf && "text-foreground")}>{review.author}</span>
         <span className={cn("uppercase tracking-[0.08em]", meta.toneClass)}>{meta.label}</span>
@@ -716,8 +712,7 @@ function DiffHunk({ hunk, highlightLine }: { hunk: string; highlightLine: number
             key={i}
             className={cn(
               "flex min-w-fit",
-              kind === "header" &&
-                "bg-[color:var(--muted)]/40 text-muted-foreground",
+              kind === "header" && "bg-[color:var(--muted)]/40 text-muted-foreground",
               kind === "add" && "bg-[color:var(--added)]/10 text-foreground",
               kind === "del" && "bg-[color:var(--deleted)]/10 text-foreground",
               isHighlighted && "ring-1 ring-inset ring-foreground/30",
@@ -730,7 +725,7 @@ function DiffHunk({ hunk, highlightLine }: { hunk: string; highlightLine: number
                 kind === "del" && "text-[color:var(--deleted)]/80",
               )}
             >
-              {kind === "header" ? "" : lineNum ?? ""}
+              {kind === "header" ? "" : (lineNum ?? "")}
             </span>
             <span
               className={cn(
@@ -752,9 +747,7 @@ function DiffHunk({ hunk, highlightLine }: { hunk: string; highlightLine: number
 
 function CommentBody({ body }: { body: string }) {
   if (!body.trim()) {
-    return (
-      <div className="px-3 py-3 text-[11px] italic text-muted-foreground">Sem descrição.</div>
-    );
+    return <div className="px-3 py-3 text-[11px] italic text-muted-foreground">Sem descrição.</div>;
   }
   return <Markdown className="px-3 py-3">{body}</Markdown>;
 }
@@ -826,7 +819,7 @@ function ReviewForm({
         />
         {err && (
           <div className="flex items-start gap-2 border border-destructive/40 bg-destructive/10 px-2 py-1.5 text-[11px] text-destructive">
-            <AlertCircle className="mt-0.5 size-3 shrink-0" />
+            <WarningCircleIcon className="mt-0.5 size-3 shrink-0" />
             <span className="min-w-0 flex-1 break-words">{err}</span>
           </div>
         )}
@@ -838,9 +831,9 @@ function ReviewForm({
             disabled={busy || !trimmed}
           >
             {submitting === "comment" ? (
-              <Loader2 className="size-3 animate-spin" />
+              <CircleNotchIcon className="size-3 animate-spin" />
             ) : (
-              <Send className="size-3" />
+              <PaperPlaneRightIcon className="size-3" />
             )}
             Comentar
           </Button>
@@ -853,9 +846,9 @@ function ReviewForm({
               className="border-[color:var(--added)]/40 text-[color:var(--added)] hover:bg-[color:var(--added)]/10"
             >
               {submitting === "APPROVE" ? (
-                <Loader2 className="size-3 animate-spin" />
+                <CircleNotchIcon className="size-3 animate-spin" />
               ) : (
-                <Check className="size-3" />
+                <CheckIcon className="size-3" />
               )}
               Aprovar
             </Button>
@@ -869,9 +862,9 @@ function ReviewForm({
               className="border-destructive/40 text-destructive hover:bg-destructive/10"
             >
               {submitting === "REQUEST_CHANGES" ? (
-                <Loader2 className="size-3 animate-spin" />
+                <CircleNotchIcon className="size-3 animate-spin" />
               ) : (
-                <X className="size-3" />
+                <XIcon className="size-3" />
               )}
               Pedir mudanças
             </Button>
@@ -882,9 +875,9 @@ function ReviewForm({
             disabled={busy || !trimmed}
           >
             {submitting === "COMMENT" ? (
-              <Loader2 className="size-3 animate-spin" />
+              <CircleNotchIcon className="size-3 animate-spin" />
             ) : (
-              <MessageSquare className="size-3" />
+              <ChatIcon className="size-3" />
             )}
             Review
           </Button>
@@ -920,35 +913,34 @@ function TabButton({
 function stateBadge(detail: PullRequestDetail): {
   label: string;
   classes: string;
-  icon: typeof GitPullRequest;
+  icon: typeof GitPullRequestIcon;
 } {
   if (detail.merged) {
     return {
       label: "Merged",
       classes:
         "border-[color:var(--branch-merged,#a371f7)]/40 bg-[color:var(--branch-merged,#a371f7)]/10 text-[color:var(--branch-merged,#a371f7)]",
-      icon: GitMerge,
+      icon: GitMergeIcon,
     };
   }
   if (detail.state === "closed") {
     return {
       label: "Fechado",
       classes: "border-destructive/40 bg-destructive/10 text-destructive",
-      icon: GitPullRequestClosed,
+      icon: GitPullRequestIcon,
     };
   }
   if (detail.draft) {
     return {
       label: "Draft",
       classes: "border-border bg-background/40 text-muted-foreground",
-      icon: GitPullRequest,
+      icon: GitPullRequestIcon,
     };
   }
   return {
     label: "Aberto",
-    classes:
-      "border-[color:var(--added)]/40 bg-[color:var(--added)]/10 text-[color:var(--added)]",
-    icon: GitPullRequest,
+    classes: "border-[color:var(--added)]/40 bg-[color:var(--added)]/10 text-[color:var(--added)]",
+    icon: GitPullRequestIcon,
   };
 }
 
@@ -1002,4 +994,3 @@ function formatRelative(iso: string): string {
   const years = Math.floor(days / 365);
   return `${years} a`;
 }
-

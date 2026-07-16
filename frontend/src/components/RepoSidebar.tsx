@@ -1,24 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  AlertTriangle,
-  ChevronDown,
-  ChevronRight,
-  Cloud,
-  Folder,
-  FolderGit2,
-  FolderPlus,
-  FolderSearch,
-  MoreHorizontal,
-  PanelLeftClose,
-  PanelLeftOpen,
-  Pencil,
-  Pin,
-  PinOff,
-  Plus,
-  Trash2,
-  X,
-} from "lucide-react";
+  CaretDownIcon,
+  CaretRightIcon,
+  CloudIcon,
+  DotsThreeIcon,
+  FolderIcon,
+  FolderPlusIcon,
+  FolderSimpleUserIcon,
+  GitBranchIcon,
+  PencilIcon,
+  PlusIcon,
+  PushPinIcon,
+  PushPinSlashIcon,
+  SidebarIcon,
+  TrashIcon,
+  WarningIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 
 import { CloneRepoDialog } from "@/components/CloneRepoDialog";
 import { MenuItem, MenuLabel, MenuSeparator, PopoverMenu } from "@/components/PopoverMenu";
@@ -104,7 +103,9 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
     }));
 
     const uncategorized = sortRepos(
-      repos.filter((r) => !assignments[r.path] || !collections.some((c) => c.id === assignments[r.path])),
+      repos.filter(
+        (r) => !assignments[r.path] || !collections.some((c) => c.id === assignments[r.path]),
+      ),
     );
     if (uncategorized.length > 0 || sortedCollections.length === 0) {
       out.push({
@@ -116,7 +117,6 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
     }
     return out;
   }, [collections, assignments, pinned, repos, uncategorizedCollapsed]);
-
 
   async function handlePick() {
     if (picking) return;
@@ -167,7 +167,7 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
           title="Expandir sidebar"
           className="flex h-10 shrink-0 items-center justify-center border-b border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
         >
-          <PanelLeftOpen className="size-3.5" />
+          <SidebarIcon className="size-3.5" />
         </button>
         <ScrollArea className="flex-1">
           <ul className="flex flex-col items-center gap-1 p-1.5">
@@ -196,7 +196,7 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
                   >
                     {getInitials(r.name)}
                     {isPinned && (
-                      <Pin className="absolute -right-0.5 -top-0.5 size-2.5 text-foreground" />
+                      <PushPinIcon className="absolute -right-0.5 -top-0.5 size-2.5 text-foreground" />
                     )}
                     {r.hasChanges && (
                       <span className="absolute -bottom-0.5 -right-0.5 size-1.5 rounded-full bg-[color:var(--modified)]" />
@@ -214,7 +214,7 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
   return (
     <aside className="flex h-full w-64 shrink-0 flex-col border-r border-border bg-card">
       <div className="flex h-10 items-center gap-2 border-b border-border px-3 text-[11px] font-medium uppercase tracking-[0.1em]">
-        <FolderGit2 className="size-3.5" />
+        <GitBranchIcon className="size-3.5" />
         Repositórios
         <span className="ml-auto text-muted-foreground tabular-nums">{repos.length}</span>
         <button
@@ -223,7 +223,7 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
           title="Recolher sidebar"
           className="flex size-5 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
         >
-          <PanelLeftClose className="size-3.5" />
+          <SidebarIcon className="size-3.5" />
         </button>
       </div>
 
@@ -235,7 +235,7 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
             disabled={picking}
             className="flex h-7 w-full items-center justify-center gap-1.5 border border-border px-2 text-[10px] font-medium uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-40"
           >
-            <FolderSearch className="size-3" />
+            <FolderSimpleUserIcon className="size-3" />
             Pasta
           </button>
           <button
@@ -243,7 +243,7 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
             onClick={() => setCloneOpen(true)}
             className="flex h-7 w-full items-center justify-center gap-1.5 border border-border px-2 text-[10px] font-medium uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
-            <Cloud className="size-3" />
+            <CloudIcon className="size-3" />
             Clonar
           </button>
         </div>
@@ -256,9 +256,11 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
               transition={{ duration: 0.16, ease: "easeOut" }}
               className="flex items-start gap-2 border border-destructive/40 bg-destructive/10 p-2 text-[11px] text-destructive"
             >
-              <AlertTriangle className="mt-0.5 size-3 shrink-0" />
+              <WarningIcon className="mt-0.5 size-3 shrink-0" />
               <div className="min-w-0 flex-1">
-                <div className="font-medium uppercase tracking-[0.08em]">Não foi possível abrir</div>
+                <div className="font-medium uppercase tracking-[0.08em]">
+                  Não foi possível abrir
+                </div>
                 <div className="mt-0.5 break-words font-mono text-[10px] opacity-90">{error}</div>
               </div>
               <button
@@ -267,7 +269,7 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
                 className="-m-0.5 flex size-4 shrink-0 items-center justify-center text-destructive/70 hover:text-destructive"
                 aria-label="Dispensar erro"
               >
-                <X className="size-3" />
+                <XIcon className="size-3" />
               </button>
             </motion.div>
           )}
@@ -277,9 +279,7 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
       <AddRepoToCollectionDialog
         open={addToCollectionId !== null}
         collectionName={
-          addToCollectionId
-            ? collections.find((c) => c.id === addToCollectionId)?.name ?? ""
-            : ""
+          addToCollectionId ? (collections.find((c) => c.id === addToCollectionId)?.name ?? "") : ""
         }
         picking={picking}
         onClose={() => setAddToCollectionId(null)}
@@ -362,7 +362,7 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
             onClick={() => setNewCollectionOpen(true)}
             className="flex h-7 w-full items-center justify-center gap-2 border border-border px-2 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
-            <FolderPlus className="size-3.5" />
+            <FolderPlusIcon className="size-3.5" />
             Nova coleção
           </button>
         )}
@@ -418,9 +418,9 @@ function CollectionSection({
           className="flex size-5 items-center justify-center text-muted-foreground hover:text-foreground"
         >
           {group.collapsed ? (
-            <ChevronRight className="size-3" />
+            <CaretRightIcon className="size-3" />
           ) : (
-            <ChevronDown className="size-3" />
+            <CaretDownIcon className="size-3" />
           )}
         </button>
         {isRenaming && group.id !== null ? (
@@ -431,7 +431,7 @@ function CollectionSection({
           />
         ) : (
           <>
-            <Folder className="size-3 text-muted-foreground" />
+            <FolderIcon className="size-3 text-muted-foreground" />
             <span className="flex-1 truncate text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
               {group.name}
             </span>
@@ -446,7 +446,7 @@ function CollectionSection({
                     onClick={toggle}
                     className="flex size-5 items-center justify-center text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-hover/header:opacity-100"
                   >
-                    <MoreHorizontal className="size-3" />
+                    <DotsThreeIcon className="size-3" />
                   </button>
                 )}
               >
@@ -458,7 +458,7 @@ function CollectionSection({
                         close();
                       }}
                     >
-                      <Pencil className="size-3" />
+                      <PencilIcon className="size-3" />
                       Renomear
                     </MenuItem>
                     <MenuItem
@@ -467,7 +467,7 @@ function CollectionSection({
                         close();
                       }}
                     >
-                      <ChevronRight className="size-3 -rotate-90" />
+                      <CaretRightIcon className="size-3 -rotate-90" />
                       Mover para cima
                     </MenuItem>
                     <MenuItem
@@ -476,7 +476,7 @@ function CollectionSection({
                         close();
                       }}
                     >
-                      <ChevronRight className="size-3 rotate-90" />
+                      <CaretRightIcon className="size-3 rotate-90" />
                       Mover para baixo
                     </MenuItem>
                     <MenuSeparator />
@@ -487,7 +487,7 @@ function CollectionSection({
                         close();
                       }}
                     >
-                      <Trash2 className="size-3" />
+                      <TrashIcon className="size-3" />
                       Excluir coleção
                     </MenuItem>
                   </>
@@ -515,7 +515,7 @@ function CollectionSection({
                     onClick={() => onAddToCollection(group.id!)}
                     className="flex w-full items-center gap-1.5 px-3 py-2 text-left text-[10px] italic text-muted-foreground transition-colors hover:bg-accent hover:not-italic hover:text-foreground"
                   >
-                    <Plus className="size-3" />
+                    <PlusIcon className="size-3" />
                     Adicionar repositório…
                   </button>
                 ) : (
@@ -591,7 +591,7 @@ function RepoRow({
           className="min-w-0 flex-1 text-left"
         >
           <div className="flex items-center gap-1.5">
-            {pinned && <Pin className="size-2.5 shrink-0 text-foreground" />}
+            {pinned && <PushPinIcon className="size-2.5 shrink-0 text-foreground" />}
             <span className="truncate text-[12px] font-medium">{repo.name}</span>
           </div>
           <div className="mt-0.5 flex items-center gap-1 truncate font-mono text-[10px] text-muted-foreground">
@@ -615,7 +615,7 @@ function RepoRow({
               }}
               className="flex size-5 items-center justify-center text-muted-foreground opacity-0 hover:text-foreground group-hover/row:opacity-100"
             >
-              <MoreHorizontal className="size-3" />
+              <DotsThreeIcon className="size-3" />
             </button>
           )}
         >
@@ -627,7 +627,11 @@ function RepoRow({
                   close();
                 }}
               >
-                {pinned ? <PinOff className="size-3" /> : <Pin className="size-3" />}
+                {pinned ? (
+                  <PushPinSlashIcon className="size-3" />
+                ) : (
+                  <PushPinIcon className="size-3" />
+                )}
                 {pinned ? "Desafixar" : "Fixar"}
               </MenuItem>
               <MenuSeparator />
@@ -639,7 +643,7 @@ function RepoRow({
                   close();
                 }}
               >
-                <Folder className="size-3" />
+                <FolderIcon className="size-3" />
                 Sem coleção
               </MenuItem>
               {collections
@@ -654,7 +658,7 @@ function RepoRow({
                       close();
                     }}
                   >
-                    <Folder className="size-3" />
+                    <FolderIcon className="size-3" />
                     {c.name}
                   </MenuItem>
                 ))}
@@ -664,7 +668,7 @@ function RepoRow({
                   close();
                 }}
               >
-                <FolderPlus className="size-3" />
+                <FolderPlusIcon className="size-3" />
                 Nova coleção…
               </MenuItem>
               <MenuSeparator />
@@ -675,7 +679,7 @@ function RepoRow({
                   close();
                 }}
               >
-                <X className="size-3" />
+                <XIcon className="size-3" />
                 Remover
               </MenuItem>
             </>
@@ -775,7 +779,7 @@ function AddRepoToCollectionDialog({
             className="flex size-5 items-center justify-center text-muted-foreground hover:text-foreground"
             aria-label="Fechar"
           >
-            <X className="size-3.5" />
+            <XIcon className="size-3.5" />
           </button>
         </div>
         <div className="grid grid-cols-2 gap-2 p-4">
@@ -785,7 +789,7 @@ function AddRepoToCollectionDialog({
             disabled={picking}
             className="flex flex-col items-center justify-center gap-2 border border-border px-3 py-6 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-40"
           >
-            <FolderSearch className="size-5" />
+            <FolderSimpleUserIcon className="size-5" />
             Selecionar pasta
           </button>
           <button
@@ -793,7 +797,7 @@ function AddRepoToCollectionDialog({
             onClick={onClone}
             className="flex flex-col items-center justify-center gap-2 border border-border px-3 py-6 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
-            <Cloud className="size-5" />
+            <CloudIcon className="size-5" />
             Clonar do GitHub
           </button>
         </div>

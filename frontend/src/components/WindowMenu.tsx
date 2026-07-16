@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Window } from "@wailsio/runtime";
 import { useRouter } from "@tanstack/react-router";
-import { Menu as MenuIcon } from "lucide-react";
+import { ListIcon as MenuIcon } from "@phosphor-icons/react";
 
 import {
   Menubar,

@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { AlertCircle, ExternalLink, GitPullRequest, Loader2, X } from "lucide-react";
+import {
+  ArrowSquareOutIcon,
+  CircleNotchIcon,
+  GitPullRequestIcon,
+  WarningCircleIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,7 +30,7 @@ export function CreatePullRequestDialog({ open, onClose }: Props) {
     ? "main"
     : branches.find((b) => b.name === "master")
       ? "master"
-      : branches.find((b) => !b.isCurrent)?.name ?? "";
+      : (branches.find((b) => !b.isCurrent)?.name ?? "");
 
   const [base, setBase] = useState(defaultBase);
   const [title, setTitle] = useState(commits[0]?.subject ?? "");
@@ -115,7 +121,7 @@ export function CreatePullRequestDialog({ open, onClose }: Props) {
       <div className="flex w-[520px] flex-col rounded-lg border border-border bg-card shadow-2xl">
         <div className="flex items-center justify-between border-b border-border px-4 py-3">
           <div className="flex items-center gap-2">
-            <GitPullRequest className="size-4" />
+            <GitPullRequestIcon className="size-4" />
             <h2 className="text-sm font-semibold">Criar pull request</h2>
           </div>
           <button
@@ -123,7 +129,7 @@ export function CreatePullRequestDialog({ open, onClose }: Props) {
             onClick={onClose}
             className="rounded p-1 text-muted-foreground hover:bg-accent hover:text-foreground"
           >
-            <X className="size-4" />
+            <XIcon className="size-4" />
           </button>
         </div>
 
@@ -151,7 +157,7 @@ export function CreatePullRequestDialog({ open, onClose }: Props) {
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 text-xs text-primary underline-offset-2 hover:underline"
             >
-              Abrir no GitHub <ExternalLink className="size-3" />
+              Abrir no GitHub <ArrowSquareOutIcon className="size-3" />
             </a>
             <Button size="sm" variant="secondary" onClick={onClose}>
               Fechar
@@ -211,7 +217,7 @@ export function CreatePullRequestDialog({ open, onClose }: Props) {
 
               {error && (
                 <div className="flex items-start gap-2 rounded border border-destructive/40 bg-destructive/10 px-3 py-2 text-[11px] text-destructive">
-                  <AlertCircle className="mt-0.5 size-3.5 shrink-0" />
+                  <WarningCircleIcon className="mt-0.5 size-3.5 shrink-0" />
                   <span>{error}</span>
                 </div>
               )}
@@ -232,17 +238,13 @@ export function CreatePullRequestDialog({ open, onClose }: Props) {
                 size="sm"
                 onClick={() => void handleSubmit()}
                 disabled={
-                  submitting ||
-                  !base.trim() ||
-                  !headName.trim() ||
-                  !title.trim() ||
-                  blocked
+                  submitting || !base.trim() || !headName.trim() || !title.trim() || blocked
                 }
               >
                 {submitting ? (
-                  <Loader2 className="size-3 animate-spin" />
+                  <CircleNotchIcon className="size-3 animate-spin" />
                 ) : (
-                  <GitPullRequest className="size-3" />
+                  <GitPullRequestIcon className="size-3" />
                 )}
                 Criar pull request
               </Button>
@@ -292,7 +294,7 @@ function ValidationBanner({
   if (checking) {
     return (
       <Banner tone="muted">
-        <Loader2 className="size-3 animate-spin" />
+        <CircleNotchIcon className="size-3 animate-spin" />
         Comparando <Mono>{base}</Mono> com <Mono>{head}</Mono>…
       </Banner>
     );
@@ -318,13 +320,7 @@ function ValidationBanner({
   );
 }
 
-function Banner({
-  tone,
-  children,
-}: {
-  tone: "ok" | "error" | "muted";
-  children: React.ReactNode;
-}) {
+function Banner({ tone, children }: { tone: "ok" | "error" | "muted"; children: React.ReactNode }) {
   const styles =
     tone === "error"
       ? "border-destructive/40 bg-destructive/10 text-destructive"
@@ -332,10 +328,8 @@ function Banner({
         ? "border-[color:var(--added)]/40 bg-[color:var(--added)]/10 text-[color:var(--added)]"
         : "border-border bg-muted/40 text-muted-foreground";
   return (
-    <div
-      className={`flex items-start gap-2 rounded border px-3 py-2 text-[11px] ${styles}`}
-    >
-      {tone === "error" && <AlertCircle className="mt-0.5 size-3.5 shrink-0" />}
+    <div className={`flex items-start gap-2 rounded border px-3 py-2 text-[11px] ${styles}`}>
+      {tone === "error" && <WarningCircleIcon className="mt-0.5 size-3.5 shrink-0" />}
       <span className="min-w-0 flex-1">{children}</span>
     </div>
   );

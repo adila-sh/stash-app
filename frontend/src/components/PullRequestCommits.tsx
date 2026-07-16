@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Browser } from "@wailsio/runtime";
-import { ExternalLink, GitCommit } from "lucide-react";
+import { ArrowSquareOutIcon, GitCommitIcon } from "@phosphor-icons/react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 
 import { relativeTime } from "@/lib/format";
@@ -53,7 +53,7 @@ export function PullRequestCommits({ commits }: Props) {
                     className="mt-0.5 size-5 shrink-0 rounded-full border border-border"
                   />
                 ) : (
-                  <GitCommit className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
+                  <GitCommitIcon className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
                 )}
                 <div className="min-w-0 flex-1">
                   <div className="truncate text-sm font-medium" title={c.subject}>
@@ -74,7 +74,7 @@ export function PullRequestCommits({ commits }: Props) {
                     className="mt-0.5 flex size-6 shrink-0 items-center justify-center text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                     title="Abrir commit no GitHub"
                   >
-                    <ExternalLink className="size-3" />
+                    <ArrowSquareOutIcon className="size-3" />
                   </button>
                 )}
               </div>

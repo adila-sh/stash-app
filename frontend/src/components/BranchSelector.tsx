@@ -1,15 +1,15 @@
 import { useMemo, useState } from "react";
 import {
-  Check,
-  ChevronsUpDown,
-  CloudUpload,
-  GitBranch,
-  GitMerge,
-  GitPullRequest,
-  Loader2,
-  Plus,
-  Search,
-} from "lucide-react";
+  CaretUpDownIcon,
+  CheckIcon,
+  CircleNotchIcon,
+  CloudArrowUpIcon,
+  GitBranchIcon,
+  GitMergeIcon,
+  GitPullRequestIcon,
+  MagnifyingGlassIcon,
+  PlusIcon,
+} from "@phosphor-icons/react";
 
 import { CreatePullRequestDialog } from "@/components/CreatePullRequestDialog";
 import { DirtyTreeDialog, isDirtyTreeError } from "@/components/DirtyTreeDialog";
@@ -20,9 +20,7 @@ import { extractErrorMessage } from "@/lib/git";
 import { useRepo } from "@/lib/repo-context";
 import { cn } from "@/lib/utils";
 
-type PendingOp =
-  | { kind: "checkout"; branch: string }
-  | { kind: "create"; branch: string };
+type PendingOp = { kind: "checkout"; branch: string } | { kind: "create"; branch: string };
 
 export function BranchSelector() {
   const {
@@ -48,10 +46,7 @@ export function BranchSelector() {
   const [dirtyOp, setDirtyOp] = useState<PendingOp | null>(null);
 
   const currentBranchName = activeRepo?.currentBranch ?? "";
-  const currentBranch = useMemo(
-    () => branches.find((b) => b.isCurrent) ?? null,
-    [branches],
-  );
+  const currentBranch = useMemo(() => branches.find((b) => b.isCurrent) ?? null, [branches]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -129,7 +124,9 @@ export function BranchSelector() {
 
   async function handleStashAndContinue() {
     if (!dirtyOp) return;
-    await stashChanges(`stash auto antes de ${dirtyOp.kind === "checkout" ? "trocar" : "criar"} ${dirtyOp.branch}`);
+    await stashChanges(
+      `stash auto antes de ${dirtyOp.kind === "checkout" ? "trocar" : "criar"} ${dirtyOp.branch}`,
+    );
     await retryPending(dirtyOp);
   }
 
@@ -169,9 +166,9 @@ export function BranchSelector() {
               open && "border-border bg-accent text-foreground",
             )}
           >
-            <GitBranch className="size-3" />
+            <GitBranchIcon className="size-3" />
             <span>{currentBranchName || "—"}</span>
-            <ChevronsUpDown className="size-3 opacity-60" />
+            <CaretUpDownIcon className="size-3 opacity-60" />
           </button>
         )}
       >
@@ -212,9 +209,9 @@ export function BranchSelector() {
               title={`Enviar ${currentAheadBehind.ahead} commit(s) para ${currentBranch?.upstream ?? "origin"}`}
             >
               {pushing ? (
-                <Loader2 className="size-3 animate-spin" />
+                <CircleNotchIcon className="size-3 animate-spin" />
               ) : (
-                <CloudUpload className="size-3" />
+                <CloudArrowUpIcon className="size-3" />
               )}
               {pushing ? "Enviando…" : `Push ${currentAheadBehind.ahead}`}
             </Button>
@@ -228,7 +225,7 @@ export function BranchSelector() {
               onClick={() => setPrOpen(true)}
               title="Criar pull request"
             >
-              <GitPullRequest className="size-3" />
+              <GitPullRequestIcon className="size-3" />
               Criar PR
             </Button>
           )}
@@ -244,9 +241,9 @@ export function BranchSelector() {
           title="Publicar branch"
         >
           {pushing ? (
-            <Loader2 className="size-3 animate-spin" />
+            <CircleNotchIcon className="size-3 animate-spin" />
           ) : (
-            <CloudUpload className="size-3" />
+            <CloudArrowUpIcon className="size-3" />
           )}
           {pushing ? "Publicando…" : "Publicar"}
         </Button>
@@ -330,9 +327,7 @@ function BranchMenuContent({
             }
           }}
         />
-        {actionError && (
-          <span className="text-[10px] text-destructive">{actionError}</span>
-        )}
+        {actionError && <span className="text-[10px] text-destructive">{actionError}</span>}
         <div className="flex justify-end gap-2">
           <Button
             type="button"
@@ -351,7 +346,11 @@ function BranchMenuContent({
             onClick={onCreate}
             disabled={pending || !newName.trim()}
           >
-            {pending ? <Loader2 className="size-3 animate-spin" /> : <GitMerge className="size-3" />}
+            {pending ? (
+              <CircleNotchIcon className="size-3 animate-spin" />
+            ) : (
+              <GitMergeIcon className="size-3" />
+            )}
             Criar e checkout
           </Button>
         </div>
@@ -363,7 +362,7 @@ function BranchMenuContent({
     <div className="flex max-h-[360px] flex-col">
       <div className="border-b border-border p-2">
         <div className="relative">
-          <Search className="absolute left-2 top-1/2 size-3 -translate-y-1/2 text-muted-foreground" />
+          <MagnifyingGlassIcon className="absolute left-2 top-1/2 size-3 -translate-y-1/2 text-muted-foreground" />
           <Input
             autoFocus
             value={query}
@@ -377,7 +376,7 @@ function BranchMenuContent({
       <div className="flex-1 overflow-y-auto py-1">
         {branchesBusy && branches.length === 0 ? (
           <div className="flex items-center justify-center gap-2 py-4 text-[11px] text-muted-foreground">
-            <Loader2 className="size-3 animate-spin" />
+            <CircleNotchIcon className="size-3 animate-spin" />
             Carregando…
           </div>
         ) : branches.length === 0 ? (
@@ -398,7 +397,7 @@ function BranchMenuContent({
                 pending && "cursor-not-allowed opacity-50",
               )}
             >
-              <Check
+              <CheckIcon
                 className={cn("size-3 shrink-0", b.isCurrent ? "opacity-100" : "opacity-0")}
               />
               <span className="flex-1 truncate font-mono">{b.name}</span>
@@ -418,7 +417,7 @@ function BranchMenuContent({
 
       <MenuSeparator />
       <MenuItem onClick={() => setCreating(true)}>
-        <Plus className="size-3" />
+        <PlusIcon className="size-3" />
         Criar nova branch
       </MenuItem>
     </div>

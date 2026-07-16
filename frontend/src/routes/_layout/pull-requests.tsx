@@ -3,11 +3,11 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Browser } from "@wailsio/runtime";
 import { motion } from "framer-motion";
 import {
-  ExternalLink,
-  GitPullRequest,
-  Loader2,
-  RefreshCw,
-} from "lucide-react";
+  ArrowClockwiseIcon,
+  ArrowSquareOutIcon,
+  CircleNotchIcon,
+  GitPullRequestIcon,
+} from "@phosphor-icons/react";
 
 import { GithubErrorBanner } from "@/components/GithubErrorBanner";
 import { Mascot } from "@/components/Mascot";
@@ -40,10 +40,7 @@ function PullRequestsView() {
 
   const owner = remote?.owner ?? null;
   const name = remote?.name ?? null;
-  const repoRef = useMemo(
-    () => (owner && name ? { owner, name } : null),
-    [owner, name],
-  );
+  const repoRef = useMemo(() => (owner && name ? { owner, name } : null), [owner, name]);
 
   const refresh = useCallback(async () => {
     if (!owner || !name || !authed) return;
@@ -67,7 +64,7 @@ function PullRequestsView() {
   if (authLoading) {
     return (
       <div className="flex flex-1 items-center justify-center">
-        <Loader2 className="size-4 animate-spin text-muted-foreground" />
+        <CircleNotchIcon className="size-4 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -91,7 +88,7 @@ function PullRequestsView() {
   return (
     <div className="flex flex-1 flex-col">
       <div className="flex h-10 shrink-0 items-center gap-2 border-b border-border bg-card px-3 text-[11px]">
-        <GitPullRequest className="size-3.5 text-muted-foreground" />
+        <GitPullRequestIcon className="size-3.5 text-muted-foreground" />
         <span className="font-medium uppercase tracking-[0.08em]">Pull Requests</span>
         <span className="text-muted-foreground">·</span>
         <span className="text-muted-foreground">
@@ -130,9 +127,9 @@ function PullRequestsView() {
             title="Atualizar"
           >
             {loading ? (
-              <Loader2 className="size-3 animate-spin" />
+              <CircleNotchIcon className="size-3 animate-spin" />
             ) : (
-              <RefreshCw className="size-3" />
+              <ArrowClockwiseIcon className="size-3" />
             )}
           </button>
         </div>
@@ -190,7 +187,7 @@ function PullRequestRow({ pr }: { pr: PullRequestSummary }) {
         }
         className="flex w-full items-start gap-3 px-3 py-2.5 text-left"
       >
-        <GitPullRequest className={cn("mt-0.5 size-4 shrink-0", stateColor)} />
+        <GitPullRequestIcon className={cn("mt-0.5 size-4 shrink-0", stateColor)} />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <span className="truncate text-[13px] text-foreground">{pr.title}</span>
@@ -221,7 +218,7 @@ function PullRequestRow({ pr }: { pr: PullRequestSummary }) {
           className="mt-0.5 flex size-5 shrink-0 items-center justify-center text-muted-foreground/60 opacity-0 transition-opacity hover:text-foreground group-hover:opacity-100"
           title="Abrir no GitHub"
         >
-          <ExternalLink className="size-3.5" />
+          <ArrowSquareOutIcon className="size-3.5" />
         </button>
       </button>
     </li>

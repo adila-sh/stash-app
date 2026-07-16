@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Window } from "@wailsio/runtime";
 import { AnimatePresence, motion } from "framer-motion";
-import { Minus, Square, SquareStack, X } from "lucide-react";
+import { MinusIcon, SquareIcon, StackIcon, XIcon } from "@phosphor-icons/react";
 
 import { Logo } from "@/components/Logo";
 import { WindowMenu } from "@/components/WindowMenu";
@@ -39,7 +39,7 @@ export function WindowTitleBar({ title = "stash" }: { title?: string }) {
       <WindowMenu />
       <div style={NO_DRAG_STYLE} className="ml-auto flex items-stretch">
         <TitleBarButton onClick={() => void Window.Minimise()} aria-label="Minimizar">
-          <Minus className="size-3.5" />
+          <MinusIcon className="size-3.5" />
         </TitleBarButton>
         <TitleBarButton
           onClick={() => void Window.ToggleMaximise()}
@@ -54,7 +54,7 @@ export function WindowTitleBar({ title = "stash" }: { title?: string }) {
               transition={{ duration: 0.12, ease: "easeOut" }}
               className="flex items-center justify-center"
             >
-              {maximised ? <SquareStack className="size-3.5" /> : <Square className="size-3" />}
+              {maximised ? <StackIcon className="size-3.5" /> : <SquareIcon className="size-3" />}
             </motion.span>
           </AnimatePresence>
         </TitleBarButton>
@@ -63,17 +63,14 @@ export function WindowTitleBar({ title = "stash" }: { title?: string }) {
           aria-label="Fechar"
           className="hover:bg-destructive hover:text-destructive-foreground"
         >
-          <X className="size-3.5" />
+          <XIcon className="size-3.5" />
         </TitleBarButton>
       </div>
     </div>
   );
 }
 
-function TitleBarButton({
-  className,
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+function TitleBarButton({ className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       type="button"

@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Cloud, FolderGit2, FolderOpen, FolderSearch, GitBranch, Loader2 } from "lucide-react";
+import {
+  CircleNotchIcon,
+  CloudIcon,
+  FolderOpenIcon,
+  FolderSimpleUserIcon,
+  GitBranchIcon,
+} from "@phosphor-icons/react";
 
 import { AsciiGlitch } from "@/components/AsciiGlitch";
 import { CloneRepoDialog } from "@/components/CloneRepoDialog";
@@ -20,7 +26,7 @@ export function WelcomeScreen({ targetCollectionId = null }: WelcomeScreenProps 
   const collections = useRepoOrgStore((s) => s.collections);
   const assignToCollection = useRepoOrgStore((s) => s.assignToCollection);
   const targetCollection = targetCollectionId
-    ? collections.find((c) => c.id === targetCollectionId) ?? null
+    ? (collections.find((c) => c.id === targetCollectionId) ?? null)
     : null;
   const [error, setError] = useState<string | null>(null);
   const [cloneOpen, setCloneOpen] = useState(false);
@@ -58,9 +64,7 @@ export function WelcomeScreen({ targetCollectionId = null }: WelcomeScreenProps 
           </p>
           {targetCollection && (
             <div className="flex items-center gap-2 border border-border bg-card px-3 py-1.5 text-[11px] text-muted-foreground">
-              <span className="text-[10px] uppercase tracking-[0.12em]">
-                Adicionando em
-              </span>
+              <span className="text-[10px] uppercase tracking-[0.12em]">Adicionando em</span>
               <span className="font-mono text-foreground">{targetCollection.name}</span>
             </div>
           )}
@@ -77,22 +81,20 @@ export function WelcomeScreen({ targetCollectionId = null }: WelcomeScreenProps 
               Repositórios salvos
             </h2>
             {repos.length > 0 && (
-              <span className="text-[11px] tabular-nums text-muted-foreground">
-                {repos.length}
-              </span>
+              <span className="text-[11px] tabular-nums text-muted-foreground">{repos.length}</span>
             )}
           </div>
 
           {!hydrated && (
             <div className="flex h-32 items-center justify-center border border-border bg-card text-[12px] text-muted-foreground">
-              <Loader2 className="mr-2 size-3.5 animate-spin" />
+              <CircleNotchIcon className="mr-2 size-3.5 animate-spin" />
               Reabrindo repositórios…
             </div>
           )}
 
           {hydrated && repos.length === 0 && (
             <div className="flex h-32 flex-col items-center justify-center gap-1 border border-dashed border-border bg-card text-[12px] text-muted-foreground">
-              <FolderOpen className="size-5" />
+              <FolderOpenIcon className="size-5" />
               <span>Nenhum repositório salvo ainda.</span>
               <span className="text-[11px]">Adicione abaixo para começar.</span>
             </div>
@@ -118,7 +120,7 @@ export function WelcomeScreen({ targetCollectionId = null }: WelcomeScreenProps 
                       className="group flex w-full items-center gap-3 border border-border bg-card px-4 py-3 text-left transition-all hover:border-foreground hover:bg-accent"
                     >
                       <div className="flex size-9 shrink-0 items-center justify-center border border-border bg-background text-muted-foreground transition-colors group-hover:text-foreground">
-                        <FolderGit2 className="size-4" />
+                        <GitBranchIcon className="size-4" />
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
@@ -133,7 +135,7 @@ export function WelcomeScreen({ targetCollectionId = null }: WelcomeScreenProps 
                         </div>
                         <div className="mt-0.5 flex items-center gap-2 truncate font-mono text-[10px] text-muted-foreground">
                           <span className="flex items-center gap-1">
-                            <GitBranch className="size-2.5" />
+                            <GitBranchIcon className="size-2.5" />
                             {r.currentBranch || "—"}
                           </span>
                           <span>·</span>
@@ -169,9 +171,9 @@ export function WelcomeScreen({ targetCollectionId = null }: WelcomeScreenProps 
                 className="flex h-9 w-full items-center justify-center gap-2 border border-border px-3 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-40"
               >
                 {picking ? (
-                  <Loader2 className="size-3.5 animate-spin" />
+                  <CircleNotchIcon className="size-3.5 animate-spin" />
                 ) : (
-                  <FolderSearch className="size-3.5" />
+                  <FolderSimpleUserIcon className="size-3.5" />
                 )}
                 Selecionar pasta
                 <KbdGroup className="ml-1">
@@ -184,7 +186,7 @@ export function WelcomeScreen({ targetCollectionId = null }: WelcomeScreenProps 
                 onClick={() => setCloneOpen(true)}
                 className="flex h-9 w-full items-center justify-center gap-2 border border-border px-3 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
               >
-                <Cloud className="size-3.5" />
+                <CloudIcon className="size-3.5" />
                 Clonar do GitHub
               </button>
             </div>

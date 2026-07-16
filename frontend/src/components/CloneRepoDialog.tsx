@@ -1,6 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { Events } from "@wailsio/runtime";
-import { Check, Folder, GitFork, Loader2, Lock, Search, Star, X } from "lucide-react";
+import {
+  CheckIcon,
+  CircleNotchIcon,
+  FolderIcon,
+  GitForkIcon,
+  LockIcon,
+  MagnifyingGlassIcon,
+  StarIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -122,7 +131,7 @@ export function CloneRepoDialog({ open, onClose, onCloned }: Props) {
             onClick={onClose}
             className="rounded p-1 text-muted-foreground hover:bg-accent hover:text-foreground"
           >
-            <X className="size-4" />
+            <XIcon className="size-4" />
           </button>
         </div>
 
@@ -139,7 +148,7 @@ export function CloneRepoDialog({ open, onClose, onCloned }: Props) {
           <>
             <div className="border-b border-border p-3">
               <div className="relative">
-                <Search className="absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+                <MagnifyingGlassIcon className="absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
@@ -152,7 +161,7 @@ export function CloneRepoDialog({ open, onClose, onCloned }: Props) {
             <ScrollArea className="flex-1">
               {loading && (
                 <div className="flex items-center justify-center gap-2 p-8 text-xs text-muted-foreground">
-                  <Loader2 className="size-3.5 animate-spin" />
+                  <CircleNotchIcon className="size-3.5 animate-spin" />
                   Carregando repositórios…
                 </div>
               )}
@@ -172,10 +181,16 @@ export function CloneRepoDialog({ open, onClose, onCloned }: Props) {
                           <div className="flex items-center gap-2">
                             <span className="truncate text-sm font-medium">{r.name}</span>
                             {r.private && (
-                              <Lock className="size-3 text-muted-foreground" aria-label="privado" />
+                              <LockIcon
+                                className="size-3 text-muted-foreground"
+                                aria-label="privado"
+                              />
                             )}
                             {r.fork && (
-                              <GitFork className="size-3 text-muted-foreground" aria-label="fork" />
+                              <GitForkIcon
+                                className="size-3 text-muted-foreground"
+                                aria-label="fork"
+                              />
                             )}
                           </div>
                           <div className="truncate text-[10px] text-muted-foreground">
@@ -190,7 +205,7 @@ export function CloneRepoDialog({ open, onClose, onCloned }: Props) {
                             {r.language && <span>{r.language}</span>}
                             {r.stars > 0 && (
                               <span className="flex items-center gap-0.5">
-                                <Star className="size-3" />
+                                <StarIcon className="size-3" />
                                 {r.stars}
                               </span>
                             )}
@@ -235,17 +250,17 @@ export function CloneRepoDialog({ open, onClose, onCloned }: Props) {
                         >
                           {inProgress ? (
                             <>
-                              <Loader2 className="size-3 animate-spin" />
+                              <CircleNotchIcon className="size-3 animate-spin" />
                               Clonando…
                             </>
                           ) : state?.success ? (
                             <>
-                              <Check className="size-3" />
+                              <CheckIcon className="size-3" />
                               Clonado
                             </>
                           ) : (
                             <>
-                              <Folder className="size-3" />
+                              <FolderIcon className="size-3" />
                               {state?.error ? "Tentar novamente" : "Clonar"}
                             </>
                           )}

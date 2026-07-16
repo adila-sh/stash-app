@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AlertTriangle, Archive, Loader2, Trash2 } from "lucide-react";
+import { ArchiveIcon, CircleNotchIcon, TrashIcon, WarningIcon } from "@phosphor-icons/react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -57,7 +57,7 @@ export function DirtyTreeDialog({ open, onOpenChange, intent, onStash, onDiscard
       <DialogContent className="sm:max-w-md" showCloseButton={!busy}>
         <DialogHeader>
           <div className="flex items-center gap-2">
-            <AlertTriangle className="size-4 text-[color:var(--deleted)]" />
+            <WarningIcon className="size-4 text-[color:var(--deleted)]" />
             <DialogTitle>Alterações não commitadas</DialogTitle>
           </div>
           <DialogDescription>
@@ -74,9 +74,9 @@ export function DirtyTreeDialog({ open, onOpenChange, intent, onStash, onDiscard
           >
             <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground group-hover:text-foreground">
               {busy === "stash" ? (
-                <Loader2 className="size-3.5 animate-spin" />
+                <CircleNotchIcon className="size-3.5 animate-spin" />
               ) : (
-                <Archive className="size-3.5" />
+                <ArchiveIcon className="size-3.5" />
               )}
             </span>
             <div className="flex-1">
@@ -95,9 +95,9 @@ export function DirtyTreeDialog({ open, onOpenChange, intent, onStash, onDiscard
           >
             <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md bg-muted text-[color:var(--deleted)]">
               {busy === "discard" ? (
-                <Loader2 className="size-3.5 animate-spin" />
+                <CircleNotchIcon className="size-3.5 animate-spin" />
               ) : (
-                <Trash2 className="size-3.5" />
+                <TrashIcon className="size-3.5" />
               )}
             </span>
             <div className="flex-1">
@@ -111,9 +111,7 @@ export function DirtyTreeDialog({ open, onOpenChange, intent, onStash, onDiscard
           </button>
         </div>
 
-        {error && (
-          <p className="text-[11px] text-[color:var(--deleted)]">{error}</p>
-        )}
+        {error && <p className="text-[11px] text-[color:var(--deleted)]">{error}</p>}
 
         <DialogFooter>
           <Button

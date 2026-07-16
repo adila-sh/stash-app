@@ -1,5 +1,13 @@
 import { useMemo, useRef, useState } from "react";
-import { ArrowDownToLine, ArrowUpToLine, Check, FileText, Loader2, Send, X } from "lucide-react";
+import {
+  ArrowLineDownIcon,
+  ArrowLineUpIcon,
+  CheckIcon,
+  CircleNotchIcon,
+  FileTextIcon,
+  PaperPlaneRightIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import { DiffView, DiffModeEnum, SplitSide } from "@git-diff-view/react";
 import { generateDiffFile } from "@git-diff-view/file";
 
@@ -288,7 +296,7 @@ export function DiffViewer({
       {settings.showFileHeader && (
         <>
           <div className={`${headerHeight} flex items-center gap-2 px-3 text-sm font-semibold`}>
-            <FileText className="size-4 text-muted-foreground" />
+            <FileTextIcon className="size-4 text-muted-foreground" />
             {diff ? <span className="font-mono text-xs">{diff.path}</span> : "Diff"}
             {diff && (
               <span className="ml-2 rounded bg-muted px-1.5 py-0.5 text-[10px] font-normal uppercase text-muted-foreground">
@@ -316,7 +324,7 @@ export function DiffViewer({
                     title={marked ? "Marcar como não visto" : "Marcar como visto"}
                     aria-pressed={marked}
                   >
-                    <Check className="size-3" />
+                    <CheckIcon className="size-3" />
                     {marked ? "Visto" : "Marcar visto"}
                   </button>
                 )}
@@ -327,7 +335,7 @@ export function DiffViewer({
                   title="Ir ao início (Home)"
                   aria-label="Ir ao início"
                 >
-                  <ArrowUpToLine className="size-3" />
+                  <ArrowLineUpIcon className="size-3" />
                 </button>
                 <button
                   type="button"
@@ -336,7 +344,7 @@ export function DiffViewer({
                   title="Ir ao fim (End)"
                   aria-label="Ir ao fim"
                 >
-                  <ArrowDownToLine className="size-3" />
+                  <ArrowLineDownIcon className="size-3" />
                 </button>
               </span>
             )}
@@ -451,11 +459,15 @@ function InlineComposer({
       {err && <p className="mt-1 text-[11px] text-destructive">{err}</p>}
       <div className="mt-2 flex justify-end gap-2">
         <Button size="sm" variant="ghost" onClick={onCancel} disabled={busy}>
-          <X className="size-3" />
+          <XIcon className="size-3" />
           Cancelar
         </Button>
         <Button size="sm" onClick={() => void submit()} disabled={busy || !trimmed}>
-          {busy ? <Loader2 className="size-3 animate-spin" /> : <Send className="size-3" />}
+          {busy ? (
+            <CircleNotchIcon className="size-3 animate-spin" />
+          ) : (
+            <PaperPlaneRightIcon className="size-3" />
+          )}
           Enviar
         </Button>
       </div>

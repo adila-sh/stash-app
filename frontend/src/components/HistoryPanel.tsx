@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { GitCommit, Loader2 } from "lucide-react";
+import { CircleNotchIcon, GitCommitIcon } from "@phosphor-icons/react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 
 import { cn } from "@/lib/utils";
@@ -30,7 +30,7 @@ export function HistoryPanel({ commits, selected, onSelect, loading }: Props) {
     <div className="flex h-full w-full flex-col border-r border-border">
       <div className="flex h-10 items-center gap-2 border-b border-border px-3 text-[11px] font-medium uppercase tracking-[0.1em]">
         Histórico
-        {loading && <Loader2 className="size-3 animate-spin text-muted-foreground" />}
+        {loading && <CircleNotchIcon className="size-3 animate-spin text-muted-foreground" />}
         <span className="ml-auto text-muted-foreground tabular-nums">{commits.length}</span>
       </div>
 
@@ -40,10 +40,7 @@ export function HistoryPanel({ commits, selected, onSelect, loading }: Props) {
             Sem commits ainda.
           </div>
         ) : (
-          <div
-            className="relative w-full"
-            style={{ height: virtualizer.getTotalSize() }}
-          >
+          <div className="relative w-full" style={{ height: virtualizer.getTotalSize() }}>
             {virtualizer.getVirtualItems().map((row) => {
               const c = commits[row.index];
               if (!c) return null;
@@ -59,7 +56,7 @@ export function HistoryPanel({ commits, selected, onSelect, loading }: Props) {
                   )}
                   style={{ transform: `translateY(${row.start}px)` }}
                 >
-                  <GitCommit className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
+                  <GitCommitIcon className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
                   <div className="min-w-0 flex-1">
                     <div className="truncate text-sm font-medium">{c.subject}</div>
                     <div className="mt-0.5 flex items-center gap-1.5 text-[11px] text-muted-foreground">

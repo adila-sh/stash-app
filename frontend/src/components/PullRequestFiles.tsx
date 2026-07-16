@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Check, FileDiff, Search, X } from "lucide-react";
+import { CheckIcon, FileTextIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 
 import { DiffViewer, type DiffComment } from "@/components/DiffViewer";
 import { ResizableX } from "@/components/ResizableX";
@@ -91,15 +91,10 @@ export function PullRequestFiles({
 
   return (
     <>
-      <ResizableX
-        storageKey="stash:sidebar-width:pr-files"
-        defaultWidth={320}
-        min={220}
-        max={560}
-      >
+      <ResizableX storageKey="stash:sidebar-width:pr-files" defaultWidth={320} min={220} max={560}>
         <div className="flex h-full w-full flex-col border-r border-border">
           <div className="flex h-12 shrink-0 items-center gap-2 px-3 text-sm font-semibold">
-            <FileDiff className="size-4 text-muted-foreground" />
+            <FileTextIcon className="size-4 text-muted-foreground" />
             <span>Arquivos</span>
             <span className="ml-auto font-mono text-[11px] text-muted-foreground">
               {reads.size}/{files.length}
@@ -109,7 +104,7 @@ export function PullRequestFiles({
 
           <div className="shrink-0 px-2 py-1.5">
             <div className="relative flex items-center">
-              <Search className="pointer-events-none absolute left-2 size-3 text-muted-foreground" />
+              <MagnifyingGlassIcon className="pointer-events-none absolute left-2 size-3 text-muted-foreground" />
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -123,7 +118,7 @@ export function PullRequestFiles({
                   className="absolute right-1 flex size-5 items-center justify-center text-muted-foreground hover:text-foreground"
                   aria-label="Limpar busca"
                 >
-                  <X className="size-3" />
+                  <XIcon className="size-3" />
                 </button>
               )}
             </div>
@@ -150,7 +145,7 @@ export function PullRequestFiles({
                       )}
                     >
                       <span className="flex min-w-0 flex-1 items-center gap-2" title={f.filename}>
-                        <FileDiff className="size-3 shrink-0 text-muted-foreground" />
+                        <FileTextIcon className="size-3 shrink-0 text-muted-foreground" />
                         <span
                           className={cn(
                             "min-w-0 flex-1 truncate font-mono",
@@ -188,7 +183,7 @@ export function PullRequestFiles({
                           )}
                           title={isRead ? "Marcar como não lido" : "Marcar como lido"}
                         >
-                          <Check className="size-2.5" />
+                          <CheckIcon className="size-2.5" />
                         </span>
                       </span>
                     </button>
@@ -206,9 +201,7 @@ export function PullRequestFiles({
           comments={fileComments}
           commentsEnabled={!!selectedFile}
           marked={!!selectedFile && reads.has(selectedFile.filename)}
-          onToggleMark={
-            selectedFile ? () => toggleRead(selectedFile.filename) : undefined
-          }
+          onToggleMark={selectedFile ? () => toggleRead(selectedFile.filename) : undefined}
           onCreateComment={async ({ line, side, body }) => {
             if (!selectedFile) return;
             await github.createReviewComment(
@@ -239,7 +232,8 @@ function shortStatus(s: string): string {
 }
 
 function patchToDiffResult(file: PullRequestFile): DiffResult {
-  const status = file.status === "added" ? "added" : file.status === "removed" ? "deleted" : "modified";
+  const status =
+    file.status === "added" ? "added" : file.status === "removed" ? "deleted" : "modified";
   if (!file.patch) {
     return {
       path: file.filename,

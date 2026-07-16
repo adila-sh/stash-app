@@ -1,4 +1,4 @@
-import { AlertCircle, ExternalLink } from "lucide-react";
+import { ArrowSquareOutIcon, WarningCircleIcon } from "@phosphor-icons/react";
 import { Browser } from "@wailsio/runtime";
 
 import { describeGithubError } from "@/lib/github-errors";
@@ -20,12 +20,10 @@ export function GithubErrorBanner({ error, className }: Props) {
         className,
       )}
     >
-      <AlertCircle className="mt-0.5 size-3.5 shrink-0 text-[color:var(--deleted)]" />
+      <WarningCircleIcon className="mt-0.5 size-3.5 shrink-0 text-[color:var(--deleted)]" />
       <div className="min-w-0 flex-1">
         <p className="text-[color:var(--deleted)]">{info.message}</p>
-        {info.hint && (
-          <p className="mt-0.5 text-muted-foreground">{info.hint}</p>
-        )}
+        {info.hint && <p className="mt-0.5 text-muted-foreground">{info.hint}</p>}
       </div>
       {info.action && (
         <button
@@ -33,7 +31,7 @@ export function GithubErrorBanner({ error, className }: Props) {
           onClick={() => void Browser.OpenURL(info.action!.url)}
           className="flex shrink-0 items-center gap-1 border border-border bg-card px-2 py-1 text-[10px] uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
         >
-          <ExternalLink className="size-3" />
+          <ArrowSquareOutIcon className="size-3" />
           {info.action.label}
         </button>
       )}

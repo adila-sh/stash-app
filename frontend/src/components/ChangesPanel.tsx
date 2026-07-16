@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  Check,
-  ChevronDown,
-  ChevronRight,
-  CloudUpload,
-  Loader2,
-  Minus,
-  Plus,
-  Search,
-  Trash2,
-  X,
-} from "lucide-react";
+  CaretDownIcon,
+  CaretRightIcon,
+  CheckIcon,
+  CircleNotchIcon,
+  CloudArrowUpIcon,
+  MagnifyingGlassIcon,
+  MinusIcon,
+  PlusIcon,
+  TrashIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -211,7 +211,7 @@ export function ChangesPanel({
     <div className="flex h-full w-full flex-col border-r border-border">
       <div className="flex h-10 items-center gap-2 border-b border-border px-3 text-[11px] font-medium uppercase tracking-[0.1em]">
         Mudanças
-        {busy && <Loader2 className="size-3 animate-spin text-muted-foreground" />}
+        {busy && <CircleNotchIcon className="size-3 animate-spin text-muted-foreground" />}
         <span className="ml-auto flex items-center gap-2">
           <span className="text-muted-foreground tabular-nums">{total}</span>
           <button
@@ -224,7 +224,7 @@ export function ChangesPanel({
             title="Pesquisar arquivo"
             aria-label="Pesquisar arquivo"
           >
-            <Search className="size-3" />
+            <MagnifyingGlassIcon className="size-3" />
           </button>
         </span>
       </div>
@@ -232,7 +232,7 @@ export function ChangesPanel({
       {searchOpen && (
         <div className="border-b border-border px-2 py-1.5">
           <div className="relative flex items-center">
-            <Search className="pointer-events-none absolute left-2 size-3 text-muted-foreground" />
+            <MagnifyingGlassIcon className="pointer-events-none absolute left-2 size-3 text-muted-foreground" />
             <Input
               ref={searchRef}
               value={query}
@@ -253,7 +253,7 @@ export function ChangesPanel({
                 className="absolute right-1 flex size-5 items-center justify-center text-muted-foreground hover:text-foreground"
                 aria-label="Limpar busca"
               >
-                <X className="size-3" />
+                <XIcon className="size-3" />
               </button>
             )}
           </div>
@@ -338,7 +338,7 @@ export function ChangesPanel({
                 className="flex items-center gap-1 border border-border px-2 py-1 text-[10px] uppercase tracking-[0.08em] transition-colors hover:bg-[color:var(--added)]/10 hover:text-[color:var(--added)]"
                 title={`Stage ${selUnstaged.length + selUntracked.length}`}
               >
-                <Plus className="size-3" />
+                <PlusIcon className="size-3" />
                 Stage
               </button>
             )}
@@ -349,7 +349,7 @@ export function ChangesPanel({
                 className="flex items-center gap-1 border border-border px-2 py-1 text-[10px] uppercase tracking-[0.08em] hover:bg-background"
                 title={`Unstage ${selStaged.length}`}
               >
-                <Minus className="size-3" />
+                <MinusIcon className="size-3" />
                 Unstage
               </button>
             )}
@@ -360,7 +360,7 @@ export function ChangesPanel({
                 className="flex items-center gap-1 border border-border px-2 py-1 text-[10px] uppercase tracking-[0.08em] text-[color:var(--destructive)] hover:bg-[color:var(--destructive)]/10"
                 title={`Descartar ${selDiscardable.length}`}
               >
-                <Trash2 className="size-3" />
+                <TrashIcon className="size-3" />
                 Descartar
               </button>
             )}
@@ -427,9 +427,9 @@ export function ChangesPanel({
               >
                 <span className="flex items-center gap-1.5">
                   {pushing ? (
-                    <Loader2 className="size-3.5 animate-spin" />
+                    <CircleNotchIcon className="size-3.5 animate-spin" />
                   ) : (
-                    <CloudUpload className="size-3.5" />
+                    <CloudArrowUpIcon className="size-3.5" />
                   )}
                   <span>Push {aheadCount}</span>
                 </span>
@@ -447,7 +447,7 @@ export function ChangesPanel({
                 transition={{ duration: 0.16 }}
                 className="mx-auto flex items-center"
               >
-                <Loader2 className="size-3.5 animate-spin" />
+                <CircleNotchIcon className="size-3.5 animate-spin" />
               </motion.span>
             ) : justCommitted ? (
               <motion.span
@@ -458,7 +458,7 @@ export function ChangesPanel({
                 transition={{ type: "spring", stiffness: 500, damping: 20 }}
                 className="relative z-10 mx-auto flex items-center gap-1.5"
               >
-                <Check className="size-3.5" strokeWidth={3} />
+                <CheckIcon className="size-3.5" weight="bold" />
                 <span>Commited</span>
               </motion.span>
             ) : (
@@ -536,7 +536,7 @@ function FileGroup({
           className="flex items-center gap-1.5 transition-colors hover:text-foreground"
           title={collapsed ? "Expandir" : "Recolher"}
         >
-          {collapsed ? <ChevronRight className="size-3" /> : <ChevronDown className="size-3" />}
+          {collapsed ? <CaretRightIcon className="size-3" /> : <CaretDownIcon className="size-3" />}
           <span>{label}</span>
         </button>
         <span className="flex items-center gap-1">
@@ -553,7 +553,7 @@ function FileGroup({
             title={kind === "staged" ? "Unstage todos" : "Stage todos"}
             aria-label={kind === "staged" ? "Unstage todos" : "Stage todos"}
           >
-            {kind === "staged" ? <Minus className="size-3" /> : <Plus className="size-3" />}
+            {kind === "staged" ? <MinusIcon className="size-3" /> : <PlusIcon className="size-3" />}
           </button>
           {onGroupDiscard && (
             <button
@@ -563,7 +563,7 @@ function FileGroup({
               title="Descartar todos"
               aria-label="Descartar todos"
             >
-              <Trash2 className="size-3" />
+              <TrashIcon className="size-3" />
             </button>
           )}
           <Checkbox
@@ -623,9 +623,9 @@ function FileGroup({
                       aria-label={kind === "staged" ? "Unstage" : "Stage"}
                     >
                       {kind === "staged" ? (
-                        <Minus className="size-3" />
+                        <MinusIcon className="size-3" />
                       ) : (
-                        <Plus className="size-3" />
+                        <PlusIcon className="size-3" />
                       )}
                     </button>
                     {onDiscard && (
@@ -639,7 +639,7 @@ function FileGroup({
                         title="Descartar"
                         aria-label="Descartar"
                       >
-                        <Trash2 className="size-3" />
+                        <TrashIcon className="size-3" />
                       </button>
                     )}
                   </span>

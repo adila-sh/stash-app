@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { RotateCcw } from "lucide-react";
+import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react";
 import type { ReactNode } from "react";
 
 import { AsciiGlitch } from "@/components/AsciiGlitch";
@@ -69,7 +69,7 @@ function SettingsView() {
             onClick={reset}
             className="flex h-8 w-full items-center justify-center gap-1.5 border border-border text-[10px] uppercase tracking-[0.1em] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
-            <RotateCcw className="size-3" />
+            <ArrowCounterClockwiseIcon className="size-3" />
             Restaurar padrões
           </button>
         </div>

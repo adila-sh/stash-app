@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Browser } from "@wailsio/runtime";
-import { Copy, ExternalLink, Loader2, LogOut } from "lucide-react";
+import { ArrowSquareOutIcon, CircleNotchIcon, CopyIcon, SignOutIcon } from "@phosphor-icons/react";
 
 import { Button } from "@/components/ui/button";
 import { useGitHubAuth } from "@/hooks/useGitHubAuth";
@@ -35,7 +35,7 @@ export function GitHubLoginButton() {
   if (loading) {
     return (
       <Button variant="ghost" size="sm" disabled>
-        <Loader2 className="size-4 animate-spin" />
+        <CircleNotchIcon className="size-4 animate-spin" />
       </Button>
     );
   }
@@ -75,7 +75,7 @@ export function GitHubLoginButton() {
               }}
               className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-xs hover:bg-accent"
             >
-              <LogOut className="size-3.5" />
+              <SignOutIcon className="size-3.5" />
               Sair
             </button>
           </div>
@@ -144,7 +144,7 @@ function DeviceFlowModal({
         <div className="mb-4 flex items-center justify-between gap-2 rounded-md border border-border bg-muted/40 px-3 py-2">
           <code className="font-mono text-lg tracking-[0.3em]">{userCode}</code>
           <Button variant="ghost" size="sm" onClick={onCopy} className="shrink-0">
-            <Copy className="size-3.5" />
+            <CopyIcon className="size-3.5" />
             {copied ? "Copiado" : "Copiar"}
           </Button>
         </div>
@@ -152,7 +152,7 @@ function DeviceFlowModal({
         <div className="mb-4 flex items-center justify-between text-xs text-muted-foreground">
           <span className="truncate">{verificationUri}</span>
           <Button variant="ghost" size="sm" onClick={onOpen} className="shrink-0">
-            <ExternalLink className="size-3.5" />
+            <ArrowSquareOutIcon className="size-3.5" />
             Abrir
           </Button>
         </div>
@@ -165,7 +165,7 @@ function DeviceFlowModal({
 
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
-            <Loader2 className="size-3.5 animate-spin" />
+            <CircleNotchIcon className="size-3.5 animate-spin" />
             Aguardando autorização…
           </div>
           <Button variant="ghost" size="sm" onClick={onCancel}>
