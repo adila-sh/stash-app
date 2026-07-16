@@ -36,7 +36,11 @@ if [ -n "$FE_FILES" ]; then
   fi
   # Caminhos relativos a frontend/
   REL=$(echo "$FE_FILES" | sed 's|^frontend/||')
-  (cd frontend && bunx --bun oxlint $REL) || fail "oxlint falhou"
+  # oxlint sai 1 quando não recebe nenhum arquivo lintável, então CSS vai só para o oxfmt.
+  LINT_REL=$(echo "$REL" | grep -E '\.(ts|tsx|js|jsx|mjs|cjs)$' || true)
+  if [ -n "$LINT_REL" ]; then
+    (cd frontend && bunx --bun oxlint $LINT_REL) || fail "oxlint falhou"
+  fi
   (cd frontend && bunx --bun oxfmt --check $REL) || fail "oxfmt --check falhou (rode: bun run --cwd frontend format)"
 fi
 
