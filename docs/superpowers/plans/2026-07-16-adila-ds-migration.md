@@ -518,6 +518,21 @@ git diff --stat frontend/src/globals.css
 
 Esperado: nenhuma saída. Se mudou, `git checkout frontend/src/globals.css`.
 
+- [ ] **Step 2a: Corrigir as variantes de orientação do `scroll-area`**
+
+Bug confirmado no registry `ds.adila.co`, não no nosso código. Ele entrega variantes `data-horizontal:` e `data-vertical:`, mas o Base UI emite `data-orientation="horizontal"` / `data-orientation="vertical"` — confirmado no DOM renderizado e em `ScrollAreaScrollbarDataAttributes.d.ts`. As classes do registry nunca casam e falham em silêncio: sem erro de build, sem erro de lint, o estilo só não aplica.
+
+O mesmo bug já foi corrigido em `src/components/ui/separator.tsx` na Task 5. Aplique o mesmo tratamento aqui:
+
+```bash
+cd /home/sousa/work/adila/stash/frontend
+grep -n 'data-horizontal\|data-vertical' src/components/ui/scroll-area.tsx
+```
+
+Para cada ocorrência, trocar `data-horizontal:X` por `data-[orientation=horizontal]:X` e `data-vertical:X` por `data-[orientation=vertical]:X`, com um comentário registrando que é divergência consciente do registry, a ser revertida quando o DS for corrigido.
+
+Não confunda com os outros `data-*` do Base UI (`data-open`, `data-closed`, `data-checked`, `data-disabled`, `data-selected`, `data-active`, `data-starting-style`, `data-ending-style`): esses são booleanos reais e estão corretos. **Só orientação** está quebrada.
+
 - [ ] **Step 2b: Reescrever o workaround de ScrollArea do Radix**
 
 `src/globals.css` tem uma regra presa a um atributo que só o Radix emite:

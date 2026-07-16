@@ -77,6 +77,20 @@ fica de fora: nenhum token do tema a referencia.
 - Substituir os 16 `ui/*` pelo conteúdo de `https://ds.adila.co/r/<nome>.json`.
 - Remover os 7 pacotes `@radix-ui/*` e `radix-ui` do `package.json`.
 
+**Divergência consciente do registry (bug do DS):** quatro componentes do
+`ds.adila.co` — `separator`, `scroll-area`, `slider` e `toggle-group` — usam as
+variantes `data-horizontal:` e `data-vertical:`, mas o Base UI emite
+`data-orientation="horizontal"` / `data-orientation="vertical"`. As classes
+nunca casam e falham em silêncio: o `<Separator />` renderiza com 0px de altura.
+Confirmado renderizando o DOM e compilando as classes com o Tailwind.
+
+Usamos dois deles (`separator`, `scroll-area`) e os corrigimos localmente para
+`data-[orientation=...]`, com comentário no código. **O DS precisa ser corrigido
+upstream**; enquanto não for, um `shadcn add` futuro nesses dois arquivos
+reintroduz o bug. Os outros `data-*` do registry (`data-open`, `data-checked`,
+`data-disabled`, `data-active`, `data-starting-style`...) são booleanos reais do
+Base UI e estão corretos — só orientação está quebrada.
+
 **Correção ao "fora de escopo":** o fecho transitivo do registry exige dois
 componentes que não temos hoje — `menubar` importa `dropdown-menu` e `command`
 importa `input-group`. Ambos entram por necessidade, não por escolha. O fecho
