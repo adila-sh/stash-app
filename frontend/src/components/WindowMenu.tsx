@@ -46,7 +46,10 @@ export function WindowMenu() {
             }}
             onPointerDown={(e) => e.preventDefault()}
             className={cn(
-              "h-6 px-1.5 text-muted-foreground hover:text-foreground data-[state=open]:bg-transparent",
+              // data-popup-open é o hook real do Base UI (Radix usava data-[state=open]); este
+              // trigger específico não tem MenubarContent associado, então nunca fica com popup
+              // aberto — mantido só por consistência com os demais triggers abaixo.
+              "h-6 px-1.5 text-muted-foreground hover:text-foreground data-popup-open:bg-transparent",
               expanded && "text-foreground",
             )}
             aria-label="Alternar menu"
@@ -59,7 +62,7 @@ export function WindowMenu() {
         {expanded && (
           <>
             <MenubarMenu>
-              <MenubarTrigger className="h-6 px-2 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground data-[state=open]:text-foreground">
+              <MenubarTrigger className="h-6 px-2 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground data-popup-open:text-foreground">
                 Arquivo
               </MenubarTrigger>
               <MenubarContent>
@@ -79,7 +82,7 @@ export function WindowMenu() {
             </MenubarMenu>
 
             <MenubarMenu>
-              <MenubarTrigger className="h-6 px-2 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground data-[state=open]:text-foreground">
+              <MenubarTrigger className="h-6 px-2 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground data-popup-open:text-foreground">
                 Visualizar
               </MenubarTrigger>
               <MenubarContent>
@@ -111,13 +114,11 @@ export function WindowMenu() {
             </MenubarMenu>
 
             <MenubarMenu>
-              <MenubarTrigger className="h-6 px-2 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground data-[state=open]:text-foreground">
+              <MenubarTrigger className="h-6 px-2 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground data-popup-open:text-foreground">
                 Janela
               </MenubarTrigger>
               <MenubarContent>
-                <MenubarItem onClick={() => void Window.Minimise()}>
-                  Minimizar
-                </MenubarItem>
+                <MenubarItem onClick={() => void Window.Minimise()}>Minimizar</MenubarItem>
                 <MenubarItem onClick={() => void Window.ToggleMaximise()}>
                   Maximizar / Restaurar
                 </MenubarItem>
