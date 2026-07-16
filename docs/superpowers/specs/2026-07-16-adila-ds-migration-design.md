@@ -44,8 +44,11 @@ Levantamento que sustenta o plano:
 - Remover os blocos `[data-theme="ultra-*"]` e os `@font-face` do Google Sans Code.
 - Inserir os `cssVars` do item `adila-theme` em `light` e `dark`, e o bloco
   `@theme` com `radius: 0.375rem`, `font-sans`, `font-mono` e `font-pixel`.
-- Trocar o `@custom-variant dark` de `[data-theme="ultra-dark"]` para o padrão
-  do DS (`.dark` / `prefers-color-scheme`).
+- Trocar o `@custom-variant dark` de `[data-theme="ultra-dark"]` para
+  `&:where(.dark, .dark *)`, a convenção do shadcn/DS. A classe `.dark` no
+  `<html>` passa a ser escrita por um hook que observa
+  `matchMedia("(prefers-color-scheme: dark)")` — é o que liga a decisão 4 ao
+  CSS, e a mesma fonte de verdade que o DiffViewer consome.
 
 **Gap:** o DS não define os tokens de git. Mapear sobre a paleta semântica do DS
 em vez de introduzir cores fora do sistema:
@@ -63,14 +66,22 @@ O `adila-theme` traz `@import "https://assets.adila.co/adila-fonts.css"`, que
 carrega woff2 do R2 por rede. Offline, isso degrada silenciosamente para o
 fallback do sistema.
 
-Baixar os woff2 de Adila Std, Adila Code e Adila Pixel para `public/fonts/` e
-declarar os `@font-face` localmente, sem o `@import` remoto.
+Baixar os woff2 de Adila Std (10 arquivos), Adila Code (12) e Adila Pixel (1)
+para `public/fonts/` e declarar os `@font-face` localmente, sem o `@import`
+remoto. A quarta família do CSS remoto, "Adila Code Proportional" (12 arquivos),
+fica de fora: nenhum token do tema a referencia.
 
 ### 3. Componentes
 
-- Instalar `@base-ui/react` e `@phosphor-icons/react`.
+- Instalar `@base-ui/react` (1.6.0) e `@phosphor-icons/react` (2.1.10).
 - Substituir os 16 `ui/*` pelo conteúdo de `https://ds.adila.co/r/<nome>.json`.
 - Remover os 7 pacotes `@radix-ui/*` e `radix-ui` do `package.json`.
+
+**Correção ao "fora de escopo":** o fecho transitivo do registry exige dois
+componentes que não temos hoje — `menubar` importa `dropdown-menu` e `command`
+importa `input-group`. Ambos entram por necessidade, não por escolha. O fecho
+completo é 18 componentes (16 nossos + 2) mais o hook `use-mobile`, que já
+existe em `src/hooks/use-mobile.ts`.
 
 Ordem por superfície crescente, para falhar cedo e barato:
 
@@ -122,6 +133,7 @@ lê `matchMedia("(prefers-color-scheme: dark)")` e reage a mudanças.
 
 ## Fora de escopo
 
-- Componentes do registry que não temos hoje (combobox, popover, sonner, empty,
-  item, field, spinner, chart...). Entram quando houver necessidade real.
+- Componentes do registry fora do fecho transitivo (combobox, popover, sonner,
+  empty, item, field, spinner, chart...). Entram quando houver necessidade real.
+  `dropdown-menu` e `input-group` **não** estão aqui: são exigidos pelo fecho.
 - Redesenho de telas. Este trabalho troca a base visual, não a composição.
