@@ -1,0 +1,168 @@
+/* ------------------------------------------------------------------ */
+/* adila.co — famílias de marca Adila, hospedadas no R2               */
+/* Adila Std · Adila Code · Adila Code Proportional · Adila Pixel      */
+/* woff2 only; font-display: swap para não bloquear o first paint.    */
+/* ------------------------------------------------------------------ */
+
+/* === Adila Std (marca principal) === */
+@font-face {
+  font-family: "Adila Std";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/adila-std/woff2/AdilaStd-Light.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Std";
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/adila-std/woff2/AdilaStd-Light%20Italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Std";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/adila-std/woff2/AdilaStd-Book.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Std";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/adila-std/woff2/AdilaStd-BookItalic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Std";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/adila-std/woff2/AdilaStd-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Std";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/adila-std/woff2/AdilaStd-MediumItalic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Std";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/adila-std/woff2/AdilaStd-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Std";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/adila-std/woff2/AdilaStd-BoldItalic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Std";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/fonts/adila-std/woff2/AdilaStd-Black.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Std";
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/fonts/adila-std/woff2/AdilaStd-BlackItalic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Code";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/adila-code/woff2/AdilaCode-Light.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Code";
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/adila-code/woff2/AdilaCode-LightItalic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Code";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/adila-code/woff2/AdilaCode-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Code";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/adila-code/woff2/AdilaCode-Italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Code";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/adila-code/woff2/AdilaCode-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Code";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/adila-code/woff2/AdilaCode-MediumItalic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Code";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/adila-code/woff2/AdilaCode-SemiBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Code";
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/adila-code/woff2/AdilaCode-SemiBoldItalic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Code";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/adila-code/woff2/AdilaCode-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Code";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/adila-code/woff2/AdilaCode-BoldItalic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Code";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/adila-code/woff2/AdilaCode-ExtraBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Code";
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/adila-code/woff2/AdilaCode-ExtraBoldItalic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Adila Pixel";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/adila-pixel/woff2/AdilaPixel-Regular-VariableFont_ELSH.woff2") format("woff2");
+}
