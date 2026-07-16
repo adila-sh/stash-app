@@ -1,19 +1,15 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, RotateCcw } from "lucide-react";
+import { RotateCcw } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { AsciiGlitch } from "@/components/AsciiGlitch";
 import { Logo } from "@/components/Logo";
 import {
-  MONO_FONT_LABELS,
   useSettings,
-  type AccentTint,
   type DiffStyle,
   type FontSize,
-  type MonoFont,
-  type Radius,
   type TabWidth,
   type WindowBlur,
   type WindowOpacity,
@@ -91,91 +87,7 @@ function SettingsView() {
           >
             {section === "appearance" && (
               <>
-                <SectionHeader
-                  title="Aparência"
-                  description="Tema e tipografia da interface."
-                />
-
-                <Field label="Tema">
-                  <div className="grid grid-cols-3 gap-3">
-                    <ThemeCard
-                      active={settings.theme === "ultra-dark"}
-                      onClick={() => update("theme", "ultra-dark")}
-                      label="Ultra Dark"
-                      bg="oklch(0 0 0)"
-                      surface="oklch(0.04 0 0)"
-                      border="oklch(1 0 0 / 12%)"
-                      fg="oklch(0.96 0 0)"
-                      muted="oklch(0.6 0 0)"
-                    />
-                    <ThemeCard
-                      active={settings.theme === "ultra-deep"}
-                      onClick={() => update("theme", "ultra-deep")}
-                      label="Ultra Deep"
-                      bg="oklch(0.08 0.05 255)"
-                      surface="oklch(0.11 0.06 255)"
-                      border="oklch(0.78 0.08 220 / 14%)"
-                      fg="oklch(0.94 0.02 220)"
-                      muted="oklch(0.62 0.05 230)"
-                    />
-                    <ThemeCard
-                      active={settings.theme === "ultra-white"}
-                      onClick={() => update("theme", "ultra-white")}
-                      label="Ultra White"
-                      bg="oklch(1 0 0)"
-                      surface="oklch(0.98 0 0)"
-                      border="oklch(0 0 0 / 12%)"
-                      fg="oklch(0.04 0 0)"
-                      muted="oklch(0.45 0 0)"
-                    />
-                    <ThemeCard
-                      active={settings.theme === "ultra-aqua"}
-                      onClick={() => update("theme", "ultra-aqua")}
-                      label="Ultra Aqua"
-                      bg="oklch(0.97 0.03 215)"
-                      surface="oklch(0.95 0.04 215)"
-                      border="oklch(0.18 0.08 250 / 14%)"
-                      fg="oklch(0.18 0.08 250)"
-                      muted="oklch(0.42 0.07 240)"
-                    />
-                    <ThemeCard
-                      active={settings.theme === "off-white"}
-                      onClick={() => update("theme", "off-white")}
-                      label="Off-White"
-                      bg="oklch(0.97 0.01 85)"
-                      surface="oklch(0.95 0.012 85)"
-                      border="oklch(0.18 0.01 60 / 14%)"
-                      fg="oklch(0.18 0.01 60)"
-                      muted="oklch(0.45 0.01 60)"
-                    />
-                  </div>
-                </Field>
-
-                <Field label="Fonte">
-                  <FontGrid<MonoFont>
-                    value={settings.monoFont}
-                    onChange={(v) => update("monoFont", v)}
-                    options={(Object.keys(MONO_FONT_LABELS) as MonoFont[]).map((k) => ({
-                      value: k,
-                      label: MONO_FONT_LABELS[k],
-                      preview: MONO_PREVIEW[k],
-                    }))}
-                  />
-                </Field>
-
-                <Field label="Cantos">
-                  <OptionGrid<Radius>
-                    value={settings.radius}
-                    onChange={(v) => update("radius", v)}
-                    options={[
-                      { value: 0, label: "Reto" },
-                      { value: 2, label: "2px" },
-                      { value: 4, label: "4px" },
-                      { value: 6, label: "6px" },
-                    ]}
-                    cols={4}
-                  />
-                </Field>
+                <SectionHeader title="Aparência" description="Janela e movimento da interface." />
 
                 <Field label="Translucência da janela">
                   <OptionGrid<WindowOpacity>
@@ -212,42 +124,6 @@ function SettingsView() {
                     ]}
                     cols={4}
                   />
-                </Field>
-
-                <Field label="Tonalidade do destaque">
-                  <div className="grid grid-cols-4 gap-2">
-                    {(
-                      [
-                        { value: "neutral", label: "Neutro", swatch: "oklch(0.14 0 0)" },
-                        { value: "cool", label: "Frio", swatch: "oklch(0.4 0.06 240)" },
-                        { value: "warm", label: "Quente", swatch: "oklch(0.55 0.08 50)" },
-                        { value: "violet", label: "Violeta", swatch: "oklch(0.42 0.1 300)" },
-                      ] as { value: AccentTint; label: string; swatch: string }[]
-                    ).map((opt) => {
-                      const active = settings.accentTint === opt.value;
-                      return (
-                        <button
-                          key={opt.value}
-                          type="button"
-                          onClick={() => update("accentTint", opt.value)}
-                          className={cn(
-                            "flex flex-col items-center gap-1.5 border bg-card p-2.5 transition-all",
-                            active
-                              ? "border-foreground"
-                              : "border-border hover:border-muted-foreground",
-                          )}
-                        >
-                          <span
-                            className="size-6 border border-border"
-                            style={{ background: opt.swatch }}
-                          />
-                          <span className="text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
-                            {opt.label}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
                 </Field>
 
                 <div>
@@ -413,14 +289,6 @@ function SettingsView() {
   );
 }
 
-const MONO_PREVIEW: Record<MonoFont, string> = {
-  google: '"Google Sans Code", ui-monospace, monospace',
-  jetbrains: '"JetBrains Mono", ui-monospace, monospace',
-  fira: '"Fira Code", ui-monospace, monospace',
-  ibm: '"IBM Plex Mono", ui-monospace, monospace',
-  system: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-};
-
 function SectionHeader({ title, description }: { title: string; description: string }) {
   return (
     <header className="mb-8 border-b border-border pb-4">
@@ -437,115 +305,6 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
         {label}
       </div>
       {children}
-    </div>
-  );
-}
-
-function ThemeCard({
-  active,
-  onClick,
-  label,
-  bg,
-  surface,
-  border,
-  fg,
-  muted,
-}: {
-  active: boolean;
-  onClick: () => void;
-  label: string;
-  bg: string;
-  surface: string;
-  border: string;
-  fg: string;
-  muted: string;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "group relative flex flex-col overflow-hidden border transition-all",
-        active ? "border-foreground" : "border-border hover:border-muted-foreground",
-      )}
-    >
-      <div className="h-24 w-full p-2" style={{ background: bg }}>
-        <div className="flex h-full flex-col gap-1 border p-1.5" style={{ background: surface, borderColor: border }}>
-          <div className="flex items-center gap-1">
-            <div className="size-1.5" style={{ background: fg }} />
-            <div className="h-1 w-12" style={{ background: muted }} />
-            <div className="ml-auto h-1 w-6" style={{ background: muted }} />
-          </div>
-          <div className="mt-1 h-1.5 w-3/4" style={{ background: fg }} />
-          <div className="h-1 w-1/2" style={{ background: muted }} />
-          <div className="mt-auto flex items-center gap-1">
-            <div className="h-1 flex-1" style={{ background: muted }} />
-            <div className="size-1.5" style={{ background: fg }} />
-          </div>
-        </div>
-      </div>
-      <div className="flex h-9 items-center justify-between border-t border-border bg-card px-3 text-[11px]">
-        <span>{label}</span>
-        <AnimatePresence>
-          {active && (
-            <motion.span
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.7 }}
-              transition={{ duration: 0.14 }}
-              className="flex size-4 items-center justify-center bg-foreground text-background"
-            >
-              <Check className="size-3" />
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </div>
-    </button>
-  );
-}
-
-interface FontOption<T> {
-  value: T;
-  label: string;
-  preview: string;
-}
-
-function FontGrid<T extends string>({
-  value,
-  onChange,
-  options,
-}: {
-  value: T;
-  onChange: (v: T) => void;
-  options: FontOption<T>[];
-}) {
-  return (
-    <div className="grid grid-cols-2 gap-2">
-      {options.map((opt) => {
-        const active = opt.value === value;
-        return (
-          <button
-            key={String(opt.value)}
-            type="button"
-            onClick={() => onChange(opt.value)}
-            className={cn(
-              "group flex flex-col items-start gap-1 border bg-card px-3 py-2.5 text-left transition-all",
-              active ? "border-foreground bg-accent" : "border-border hover:border-muted-foreground",
-            )}
-          >
-            <div className="flex w-full items-center justify-between text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
-              <span>{opt.label}</span>
-              {active && <Check className="size-3 text-foreground" />}
-            </div>
-            <div
-              className="text-[14px] leading-tight text-foreground"
-              style={{ fontFamily: opt.preview, fontVariationSettings: '"MONO" 1' }}
-            >
-              Aa Bb 0123
-            </div>
-          </button>
-        );
-      })}
     </div>
   );
 }
@@ -624,7 +383,10 @@ function Toggle({
         <motion.span
           layout
           transition={{ type: "spring", stiffness: 700, damping: 36 }}
-          className={cn("ml-0.5 block size-2.5", checked ? "ml-auto mr-0.5 bg-background" : "bg-foreground")}
+          className={cn(
+            "ml-0.5 block size-2.5",
+            checked ? "ml-auto mr-0.5 bg-background" : "bg-foreground",
+          )}
         />
       </span>
       <input
@@ -646,11 +408,7 @@ function Row({ k, v }: { k: string; v: string }) {
   );
 }
 
-const SAMPLE_OLD = [
-  "function greet(name) {",
-  "\treturn 'Hi ' + name;",
-  "}",
-];
+const SAMPLE_OLD = ["function greet(name) {", "\treturn 'Hi ' + name;", "}"];
 const SAMPLE_NEW = [
   "function greet(name: string) {",
   "\treturn `Hello, ${name.trim()}! Welcome to stash, the minimal git client.`;",
@@ -715,16 +473,43 @@ function DiffPreview({
     style === "inline" ? "inline" : style === "collapsed" ? "collapsed" : "default";
 
   return (
-    <div
-      className="overflow-hidden border border-border font-mono"
-      style={previewStyle}
-    >
-      <DiffLine ln={1} text={SAMPLE_OLD[0]} kind="del" showLineNumbers={showLineNumbers} variant={variant} />
-      <DiffLine ln={1} text={SAMPLE_NEW[0]} kind="add" showLineNumbers={showLineNumbers} variant={variant} />
-      <DiffLine ln={2} text={SAMPLE_OLD[1]} kind="del" showLineNumbers={showLineNumbers} variant={variant} />
-      <DiffLine ln={2} text={SAMPLE_NEW[1]} kind="add" showLineNumbers={showLineNumbers} variant={variant} />
+    <div className="overflow-hidden border border-border font-mono" style={previewStyle}>
+      <DiffLine
+        ln={1}
+        text={SAMPLE_OLD[0]}
+        kind="del"
+        showLineNumbers={showLineNumbers}
+        variant={variant}
+      />
+      <DiffLine
+        ln={1}
+        text={SAMPLE_NEW[0]}
+        kind="add"
+        showLineNumbers={showLineNumbers}
+        variant={variant}
+      />
+      <DiffLine
+        ln={2}
+        text={SAMPLE_OLD[1]}
+        kind="del"
+        showLineNumbers={showLineNumbers}
+        variant={variant}
+      />
+      <DiffLine
+        ln={2}
+        text={SAMPLE_NEW[1]}
+        kind="add"
+        showLineNumbers={showLineNumbers}
+        variant={variant}
+      />
       {variant !== "collapsed" && (
-        <DiffLine ln={3} text={SAMPLE_OLD[2]} kind="ctx" showLineNumbers={showLineNumbers} variant={variant} />
+        <DiffLine
+          ln={3}
+          text={SAMPLE_OLD[2]}
+          kind="ctx"
+          showLineNumbers={showLineNumbers}
+          variant={variant}
+        />
       )}
     </div>
   );

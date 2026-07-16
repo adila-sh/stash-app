@@ -1,13 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import {
-  ArrowDownToLine,
-  ArrowUpToLine,
-  Check,
-  FileText,
-  Loader2,
-  Send,
-  X,
-} from "lucide-react";
+import { ArrowDownToLine, ArrowUpToLine, Check, FileText, Loader2, Send, X } from "lucide-react";
 import { DiffView, DiffModeEnum, SplitSide } from "@git-diff-view/react";
 import { generateDiffFile } from "@git-diff-view/file";
 
@@ -16,6 +8,7 @@ import { Markdown } from "@/components/Markdown";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useSettings } from "@/lib/settings-store";
 import { cn } from "@/lib/utils";
 import type { DiffResult } from "@/lib/git";
@@ -59,7 +52,11 @@ export interface DiffComment {
   body: string;
 }
 
-type CommentSubmit = (input: { line: number; side: "LEFT" | "RIGHT"; body: string }) => Promise<void>;
+type CommentSubmit = (input: {
+  line: number;
+  side: "LEFT" | "RIGHT";
+  body: string;
+}) => Promise<void>;
 
 interface Props {
   diff: DiffResult | null;
@@ -153,7 +150,11 @@ function ImageDiff({
     <div className="flex h-full w-full items-start justify-center overflow-auto p-6">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <ImagePane src={oldSrc!} label="Antes" tone="var(--removed)" />
-        <ImagePane src={newSrc!} label={status === "renamed" ? "Depois (renomeado)" : "Depois"} tone="var(--added)" />
+        <ImagePane
+          src={newSrc!}
+          label={status === "renamed" ? "Depois (renomeado)" : "Depois"}
+          tone="var(--added)"
+        />
       </div>
     </div>
   );
@@ -162,10 +163,7 @@ function ImageDiff({
 function ImagePane({ src, label, tone }: { src: string; label: string; tone: string }) {
   return (
     <figure className="flex flex-col items-center gap-2">
-      <span
-        className="text-[10px] font-medium uppercase tracking-[0.12em]"
-        style={{ color: tone }}
-      >
+      <span className="text-[10px] font-medium uppercase tracking-[0.12em]" style={{ color: tone }}>
         {label}
       </span>
       <img
@@ -200,27 +198,20 @@ export function DiffViewer({
   onToggleMark,
 }: Props) {
   const { settings } = useSettings();
+  const scheme = useColorScheme();
 
   const lock = !!diff && isLockFile(diff.path);
 
   const diffFile = useMemo(() => {
     if (!diff || diff.isBinary || isLockFile(diff.path)) return null;
     const lang = inferLang(diff.path);
-    const file = generateDiffFile(
-      diff.path,
-      diff.oldText,
-      diff.path,
-      diff.newText,
-      lang,
-      lang,
-    );
-    file.initTheme(settings.theme === "ultra-dark" ? "dark" : "light");
+    const file = generateDiffFile(diff.path, diff.oldText, diff.path, diff.newText, lang, lang);
+    file.initTheme(scheme);
     file.init();
     if (settings.diffStyle === "split") file.buildSplitDiffLines();
     else file.buildUnifiedDiffLines();
     return file;
-  }, [diff, settings.theme, settings.diffStyle]);
-
+  }, [diff, scheme, settings.diffStyle]);
 
   const extendData = useMemo(() => {
     if (!commentsEnabled || !comments || comments.length === 0) return undefined;
@@ -381,8 +372,10 @@ export function DiffViewer({
         {!loading && diffFile && (
           <DiffView<DiffComment[]>
             diffFile={diffFile}
-            diffViewMode={settings.diffStyle === "split" ? DiffModeEnum.Split : DiffModeEnum.Unified}
-            diffViewTheme={settings.theme === "ultra-dark" ? "dark" : "light"}
+            diffViewMode={
+              settings.diffStyle === "split" ? DiffModeEnum.Split : DiffModeEnum.Unified
+            }
+            diffViewTheme={scheme}
             diffViewFontSize={settings.diffFontSize}
             diffViewHighlight={settings.syntaxHighlight}
             diffViewWrap={settings.wrapLines}
