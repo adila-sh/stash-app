@@ -870,43 +870,43 @@ git commit -m "refactor: remover seletores de tema, fonte, radius e accent dos s
 **Interfaces:**
 - Consumes: `@phosphor-icons/react` (Task 4).
 
-São 34 ícones distintos. Phosphor renomeia a família "chevron" para "caret" e usa `weight` em vez de variantes de import. O tamanho continua vindo do CSS (`[&_svg]:size-4` nos componentes), então não é preciso passar `size`.
+Phosphor renomeia a família "chevron" para "caret" e usa `weight` em vez de variantes de import. O tamanho continua vindo do CSS (`[&_svg]:size-4` nos componentes), então não é preciso passar `size`.
 
-Tabela de tradução — usar exatamente estes nomes:
+**Convenção de nomes:** usar o sufixo `*Icon`. O Phosphor exporta as duas formas (`Check` e `CheckIcon`), mas os componentes vindos do registry já usam o sufixo e é a convenção estabelecida no projeto — misturar as duas criaria dois estilos no mesmo código. Todos os 30 destinos abaixo foram validados contra `@phosphor-icons/react@2.1.10`.
 
 | Lucide | Phosphor |
 |---|---|
-| `AlertCircle` | `WarningCircle` |
-| `AlertTriangle` | `Warning` |
-| `Archive` | `Archive` |
-| `Check`, `CheckIcon` | `Check` |
-| `ChevronRightIcon` | `CaretRight` |
-| `CircleIcon` | `Circle` |
-| `Cloud` | `Cloud` |
-| `Copy` | `Copy` |
-| `ExternalLink` | `ArrowSquareOut` |
-| `FileDiff` | `FileText` |
-| `Folder` | `Folder` |
-| `FolderGit2` | `GitBranch` |
-| `FolderOpen` | `FolderOpen` |
-| `FolderSearch` | `FolderSimpleUser` |
-| `GitBranch` | `GitBranch` |
-| `GitCommit` | `GitCommit` |
-| `GitFork` | `GitFork` |
-| `GitPullRequest` | `GitPullRequest` |
-| `Loader2` | `CircleNotch` |
-| `Lock` | `Lock` |
-| `LogOut` | `SignOut` |
-| `Menu` | `List` |
-| `Minus` | `Minus` |
-| `PanelLeftIcon` | `SidebarSimple` |
-| `RotateCcw` | `ArrowCounterClockwise` |
-| `Search`, `SearchIcon` | `MagnifyingGlass` |
-| `Square` | `Square` |
-| `SquareStack` | `Stack` |
-| `Star` | `Star` |
-| `Trash2` | `Trash` |
-| `X`, `XIcon` | `X` |
+| `AlertCircle` | `WarningCircleIcon` |
+| `AlertTriangle` | `WarningIcon` |
+| `Archive` | `ArchiveIcon` |
+| `Check`, `CheckIcon` | `CheckIcon` |
+| `ChevronRightIcon` | `CaretRightIcon` |
+| `CircleIcon` | `CircleIcon` |
+| `Cloud` | `CloudIcon` |
+| `Copy` | `CopyIcon` |
+| `ExternalLink` | `ArrowSquareOutIcon` |
+| `FileDiff` | `FileTextIcon` |
+| `Folder` | `FolderIcon` |
+| `FolderGit2` | `GitBranchIcon` |
+| `FolderOpen` | `FolderOpenIcon` |
+| `FolderSearch` | `FolderSimpleUserIcon` |
+| `GitBranch` | `GitBranchIcon` |
+| `GitCommit` | `GitCommitIcon` |
+| `GitFork` | `GitForkIcon` |
+| `GitPullRequest` | `GitPullRequestIcon` |
+| `Loader2` | `CircleNotchIcon` |
+| `Lock` | `LockIcon` |
+| `LogOut` | `SignOutIcon` |
+| `Menu` | `ListIcon` |
+| `Minus` | `MinusIcon` |
+| `PanelLeftIcon` | `SidebarIcon` |
+| `RotateCcw` | `ArrowCounterClockwiseIcon` |
+| `Search`, `SearchIcon` | `MagnifyingGlassIcon` |
+| `Square` | `SquareIcon` |
+| `SquareStack` | `StackIcon` |
+| `Star` | `StarIcon` |
+| `Trash2` | `TrashIcon` |
+| `X`, `XIcon` | `XIcon` |
 
 - [ ] **Step 1: Listar os arquivos a tocar**
 
