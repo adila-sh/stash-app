@@ -65,12 +65,13 @@ curl -sL https://assets.adila.co/adila-fonts.css \
   | grep -v 'Proportional' \
   | while read -r url; do
       rel="${url#https://assets.adila.co/fonts/}"
-      fam="${rel%%/*}"
-      file=$(basename "$rel")
-      curl -sL --fail "$url" -o "public/fonts/$fam/$file" \
-        && echo "ok  $fam/$file" || echo "FALHOU $url"
+      mkdir -p "public/fonts/$(dirname "$rel")"
+      curl -sL --fail "$url" -o "public/fonts/$rel" \
+        && echo "ok  $rel" || echo "FALHOU $url"
     done
 ```
+
+O path de origem é preservado inteiro (`adila-std/woff2/AdilaStd-Light.woff2`), **não** achatado. O Step 3 só reescreve o domínio do CSS e mantém o resto do path, então disco e CSS precisam ter exatamente a mesma estrutura. Achatar aqui deixa as 23 URLs órfãs e as fontes caem silenciosamente para o fallback do sistema.
 
 - [ ] **Step 2: Conferir que baixou 23 arquivos e nenhum falhou**
 
@@ -113,6 +114,21 @@ grep -c 'Proportional' public/fonts/adila-fonts.css || echo "0 referências a Pr
 ```
 
 Esperado: `blocos: 35 -> 23` e nenhuma referência a Proportional.
+
+- [ ] **Step 4b: Provar que cada URL do CSS resolve para um arquivo real**
+
+Esta é a única verificação que comprova a task. Contar arquivos e contar blocos não substitui: uma URL órfã não dá erro, a fonte só cai calada para o fallback do sistema — que é precisamente o bug que esta task existe para evitar.
+
+```bash
+cd /home/sousa/work/adila/stash/frontend
+ok=0; bad=0
+while read -r u; do
+  if [ -f "public${u}" ]; then ok=$((ok+1)); else bad=$((bad+1)); echo "  ÓRFÃ: $u"; fi
+done < <(grep -oP '(?<=url\(")[^"]+' public/fonts/adila-fonts.css)
+echo "resolvem: $ok | órfãs: $bad"
+```
+
+Esperado: `resolvem: 23 | órfãs: 0`. Qualquer órfã bloqueia o commit.
 
 - [ ] **Step 5: Remover a fonte antiga**
 
