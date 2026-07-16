@@ -4,6 +4,7 @@ import { RouterProvider } from "@tanstack/react-router";
 import { HotkeysProvider } from "@tanstack/react-hotkeys";
 
 import { router } from "./router";
+import { initColorScheme } from "@/hooks/use-color-scheme";
 import "./lib/settings-store";
 import "./globals.css";
 import "@git-diff-view/react/styles/diff-view.css";
@@ -12,6 +13,8 @@ const rootEl = document.getElementById("root");
 if (!rootEl) {
   throw new Error("missing #root");
 }
+
+initColorScheme();
 
 createRoot(rootEl).render(
   <StrictMode>
