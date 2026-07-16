@@ -151,7 +151,6 @@
   body {
     @apply text-foreground antialiased;
     font-family: var(--font-sans);
-    font-variation-settings: "MONO" 1;
     overscroll-behavior: none;
     user-select: none;
   }
