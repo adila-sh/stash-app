@@ -173,7 +173,6 @@
   .font-mono,
   .uppercase {
     font-family: var(--font-mono);
-    font-variation-settings: "MONO" 1;
   }
 
   /* Tech UI: scrollbars */

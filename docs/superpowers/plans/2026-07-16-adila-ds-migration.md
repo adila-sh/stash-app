@@ -357,10 +357,12 @@ O `globals.css` tem 373 linhas; os blocos de tema são só uma parte. Ler o rest
 
 ```bash
 cd /home/sousa/work/adila/stash/frontend
-grep -n 'data-theme\|ultra-\|off-white\|Google Sans Code' src/globals.css
+grep -n 'data-theme\|ultra-\|off-white\|Google Sans Code\|font-variation-settings' src/globals.css
 ```
 
 Esperado: **nenhuma saída**. Se aparecer algo, é uma regra órfã dos temas antigos — remover ou reescrever para os tokens novos antes de seguir.
+
+`font-variation-settings` entra no grep porque a regra `.uppercase` usava `"MONO" 1`, um eixo variável da Google Sans Code. As fontes Adila Code são estáticas e não têm eixo nenhum (só a Adila Pixel é variável, com o eixo `ELSH`). Procurar pelo nome da fonte não acha esse resíduo — ele cita só o eixo.
 
 - [ ] **Step 3: Conferir que os tokens do DS estão registrados no `@theme` do Tailwind**
 
@@ -515,6 +517,30 @@ git diff --stat frontend/src/globals.css
 ```
 
 Esperado: nenhuma saída. Se mudou, `git checkout frontend/src/globals.css`.
+
+- [ ] **Step 2b: Reescrever o workaround de ScrollArea do Radix**
+
+`src/globals.css` tem uma regra presa a um atributo que só o Radix emite:
+
+```css
+/* Radix ScrollArea envolve filhos em um div com display:table que cresce
+   com o conteúdo, quebrando truncate. Força block para que o filho respeite
+   a largura do viewport e `truncate` funcione. */
+[data-radix-scroll-area-viewport] > div {
+  display: block !important;
+}
+```
+
+Com o ScrollArea vindo do Base UI, `[data-radix-scroll-area-viewport]` deixa de existir: a regra vira letra morta **e o bug de `truncate` que ela conserta volta**, calado.
+
+Descubra o que o Base UI realmente emite, em vez de adivinhar o atributo:
+
+```bash
+cd /home/sousa/work/adila/stash/frontend
+grep -n 'Viewport\|viewport\|data-' src/components/ui/scroll-area.tsx
+```
+
+Se o viewport do Base UI não envolver os filhos num `display: table`, a regra inteira é desnecessária — remova-a e o comentário. Se envolver, reescreva o seletor para o atributo que o Base UI emite de fato. Não deixe a regra do Radix parada no arquivo: ela não faz nada e mente para quem ler depois.
 
 - [ ] **Step 3: Achar quem importa `ButtonProps`**
 
