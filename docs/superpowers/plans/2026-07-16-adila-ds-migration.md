@@ -793,6 +793,39 @@ file.initTheme(scheme);
 
 `useColorScheme` já retorna exatamente `"dark" | "light"`, então o ternário some.
 
+- [ ] **Step 6b: `globals.css` — parar de forçar radius 0**
+
+Remover o `--radius` do `applySettings` não é suficiente: o `globals.css` anula o radius do tema em dois outros lugares, e é isso que faz o raio de 6px prometido no Step 9 realmente aparecer.
+
+Primeiro, no bloco `@theme inline`, os quatro tokens estão fixos em `0` — e são eles que alimentam `rounded-sm`, `rounded-md`, `rounded-lg` e `rounded-xl`, não o `--radius`. Trocar por derivações do `--radius`, que é a convenção do shadcn e o que os componentes do registry esperam:
+
+```css
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+```
+
+Segundo, no `@layer base`, a regra coringa zera o raio de tudo com `!important` e venceria qualquer utilitário:
+
+```css
+  * {
+    @apply border-border outline-ring/50;
+    border-radius: 0 !important;   /* <- remover apenas esta linha */
+  }
+```
+
+Remover só a linha do `border-radius`; o `@apply` continua.
+
+Conferir depois que nada mais força zero:
+
+```bash
+cd /home/sousa/work/adila/stash/frontend
+grep -n 'radius.*0\|border-radius' src/globals.css
+```
+
+Esperado: só as quatro linhas com `calc(var(--radius) ...)` e `var(--radius)`. Nenhum `0` solto, nenhum `!important`.
+
 - [ ] **Step 7: `settings.tsx` — remover as quatro seções**
 
 Remover os blocos de UI de tema (≈96-150), fonte mono (≈152-165), radius (≈166-175) e accent tint (≈220-240), junto dos imports que ficarem órfãos (`MONO_FONT_LABELS` e afins). Manter as seções de opacidade de janela, blur, movimento reduzido e as de diff.
