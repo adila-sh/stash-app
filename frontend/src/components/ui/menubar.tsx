@@ -225,7 +225,10 @@ function MenubarSubTrigger({
       data-slot="menubar-sub-trigger"
       data-inset={inset}
       className={cn(
-        "gap-1.5 rounded-md px-1.5 py-1 text-sm focus:bg-accent focus:text-accent-foreground data-inset:pl-7 data-open:bg-accent data-open:text-accent-foreground [&_svg:not([class*='size-'])]:size-4",
+        // Divergência consciente do registry ds.adila.co: mesmo bug já corrigido no
+        // DropdownMenuSubTrigger vizinho — o Base UI (MenuSubmenuTriggerDataAttributes) só emite
+        // data-popup-open neste elemento, nunca data-open, e o seletor era morto.
+        "gap-1.5 rounded-md px-1.5 py-1 text-sm focus:bg-accent focus:text-accent-foreground data-inset:pl-7 data-popup-open:bg-accent data-popup-open:text-accent-foreground [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
