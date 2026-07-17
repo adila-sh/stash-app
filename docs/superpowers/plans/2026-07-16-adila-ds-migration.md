@@ -45,12 +45,16 @@
 ### Task 1: Fontes locais
 
 **Files:**
-- Create: `frontend/public/fonts/adila-fonts.css`
+- Create: `frontend/src/styles/adila-fonts.css`
 - Create: `frontend/public/fonts/{adila-std,adila-code,adila-pixel}/*.woff2`
 - Delete: `frontend/public/Google_Sans_Code/`
 
 **Interfaces:**
-- Produces: `public/fonts/adila-fonts.css`, importável via `@import "/fonts/adila-fonts.css"` a partir do `globals.css`. Declara as famílias `"Adila Std"`, `"Adila Code"` e `"Adila Pixel"`.
+- Produces: `src/styles/adila-fonts.css`, importável via `@import "./styles/adila-fonts.css"` a partir do `globals.css`. Declara as famílias `"Adila Std"`, `"Adila Code"` e `"Adila Pixel"`.
+
+**O CSS fica em `src/`, os woff2 em `public/`** — e a divisão não é arbitrária. Um `@import` de CSS é resolvido pelo **bundler, em tempo de build**: `@import "/fonts/adila-fonts.css"` faz o Vite procurar um módulo nesse caminho e falhar com `Can't resolve '/fonts/adila-fonts.css'`. Já os `url()` dentro do CSS são referências de runtime, e caminho absoluto (`/fonts/...woff2`) é servido direto de `public/` sem o bundler tocar.
+
+Cuidado: nem `tsc` nem `oxlint` compilam CSS, então esse erro **só aparece no `bun run build`**. Se a verificação da task for só typecheck e lint, ele passa despercebido até o primeiro build de produção.
 
 - [ ] **Step 1: Baixar os woff2 das três famílias**
 
@@ -244,7 +248,7 @@ Trocar as linhas 1-21 de `frontend/src/globals.css` (os dois `@import`, os dois 
 ```css
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "/fonts/adila-fonts.css";
+@import "./styles/adila-fonts.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 

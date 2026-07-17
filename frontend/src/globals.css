@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "/fonts/adila-fonts.css";
+@import "./styles/adila-fonts.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
