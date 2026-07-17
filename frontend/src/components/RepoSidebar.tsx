@@ -13,7 +13,8 @@ import {
   PlusIcon,
   PushPinIcon,
   PushPinSlashIcon,
-  SidebarIcon,
+  ArrowLineLeftIcon,
+  ArrowLineRightIcon,
   TrashIcon,
   WarningIcon,
   XIcon,
@@ -167,7 +168,7 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
           title="Expandir sidebar"
           className="flex h-10 shrink-0 items-center justify-center border-b border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
         >
-          <SidebarIcon className="size-3.5" />
+          <ArrowLineRightIcon className="size-3.5" />
         </button>
         <ScrollArea className="flex-1">
           <ul className="flex flex-col items-center gap-1 p-1.5">
@@ -223,7 +224,7 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
           title="Recolher sidebar"
           className="flex size-5 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
         >
-          <SidebarIcon className="size-3.5" />
+          <ArrowLineLeftIcon className="size-3.5" />
         </button>
       </div>
 
