@@ -2,6 +2,7 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { afterEach, beforeEach, vi } from "vitest";
 
+import { githubMock } from "./mocks/github";
 import { wailsMock } from "./mocks/wails";
 
 vi.mock("@tanstack/react-router-devtools", () => ({
@@ -88,8 +89,21 @@ Object.defineProperty(window, "scrollTo", {
   value: vi.fn(),
 });
 
-beforeEach(() => {
-  wailsMock.state.repoPaths = [];
+beforeEach(async () => {
+  githubMock.reset();
+  wailsMock.reset();
+  const [{ useRepoOrgStore }, { useSettingsStore }] = await Promise.all([
+    import("@/lib/repo-org-store"),
+    import("@/lib/settings-store"),
+  ]);
+  useSettingsStore.getState().reset();
+  useRepoOrgStore.setState({
+    collections: [],
+    pinned: [],
+    assignments: {},
+    uncategorizedCollapsed: false,
+    sidebarCollapsed: false,
+  });
   localStorage.clear();
 });
 

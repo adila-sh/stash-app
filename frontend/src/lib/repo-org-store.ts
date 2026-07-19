@@ -129,7 +129,7 @@ export const useRepoOrgStore = create<RepoOrgState>()((set, get) => ({
 
   reorderCollection: (id, dir) =>
     set((s) => {
-      const sorted = [...s.collections].sort((a, b) => a.order - b.order);
+      const sorted = s.collections.toSorted((a, b) => a.order - b.order);
       const idx = sorted.findIndex((c) => c.id === id);
       if (idx < 0) return {};
       const swap = dir === "up" ? idx - 1 : idx + 1;

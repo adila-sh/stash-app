@@ -314,8 +314,7 @@ export function RepoProvider({ children }: { children: ReactNode }) {
       setRepos((prev) => prev.filter((r) => r.path !== path));
       if (activePath === path) {
         setActivePath((prev) => {
-          const remaining = repos.filter((r) => r.path !== prev);
-          return remaining[0]?.path ?? null;
+          return repos.find((r) => r.path !== prev)?.path ?? null;
         });
       }
     },

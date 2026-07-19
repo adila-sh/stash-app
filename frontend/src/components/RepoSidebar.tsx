@@ -86,10 +86,10 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
   }, [repos, hydrated, orgHydrated, cleanupForPaths]);
 
   const groups = useMemo<Group[]>(() => {
-    const sortedCollections = [...collections].sort((a, b) => a.order - b.order);
+    const sortedCollections = collections.toSorted((a, b) => a.order - b.order);
     const pinnedSet = new Set(pinned);
     const sortRepos = (rs: RepoInfo[]) =>
-      [...rs].sort((a, b) => {
+      rs.toSorted((a, b) => {
         const ap = pinnedSet.has(a.path);
         const bp = pinnedSet.has(b.path);
         if (ap !== bp) return ap ? -1 : 1;
@@ -153,7 +153,7 @@ export function RepoSidebar({ repos, active, onSelect, onAdd, onRemove }: Props)
 
   if (sidebarCollapsed) {
     const pinnedSet = new Set(pinned);
-    const sortedRepos = [...repos].sort((a, b) => {
+    const sortedRepos = repos.toSorted((a, b) => {
       const ap = pinnedSet.has(a.path);
       const bp = pinnedSet.has(b.path);
       if (ap !== bp) return ap ? -1 : 1;
@@ -648,8 +648,7 @@ function RepoRow({
                 Sem coleção
               </MenuItem>
               {collections
-                .slice()
-                .sort((a, b) => a.order - b.order)
+                .toSorted((a, b) => a.order - b.order)
                 .map((c) => (
                   <MenuItem
                     key={c.id}

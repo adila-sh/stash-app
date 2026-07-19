@@ -10,9 +10,10 @@
     "browser": true,
     "es2024": true
   },
-  "ignorePatterns": ["dist", "bindings", "node_modules"],
+  "ignorePatterns": ["coverage", "dist", "bindings", "node_modules"],
   "rules": {
     "no-console": "off",
+    "no-underscore-dangle": ["warn", { "allow": ["__APP_VERSION__"] }],
     "react/react-in-jsx-scope": "off",
     "react/no-array-index-key": "off"
   }

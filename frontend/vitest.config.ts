@@ -17,5 +17,27 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./src/test/setup.ts"],
     clearMocks: true,
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json-summary"],
+      reportsDirectory: "./coverage",
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: [
+        "src/**/*.test.{ts,tsx}",
+        "src/components/ui/**",
+        "src/lib/lowlight-shim.ts",
+        "src/main.tsx",
+        "src/routeTree.gen.ts",
+        "src/router.ts",
+        "src/test/**",
+        "src/vite-env.d.ts",
+      ],
+      thresholds: {
+        statements: 65,
+        branches: 55,
+        functions: 65,
+        lines: 70,
+      },
+    },
   },
 });

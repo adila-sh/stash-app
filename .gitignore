@@ -1,6 +1,7 @@
 .task
 bin
 frontend/dist
+frontend/coverage
 frontend/node_modules
 frontend/bindings
 build/linux/appimage/build

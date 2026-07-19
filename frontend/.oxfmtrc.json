@@ -6,5 +6,5 @@
   "singleQuote": false,
   "trailingComma": "all",
   "semi": true,
-  "ignorePatterns": ["dist", "bindings", "node_modules"]
+  "ignorePatterns": ["coverage", "dist", "bindings", "node_modules", "src/routeTree.gen.ts"]
 }
