@@ -6,11 +6,7 @@ import { cn } from "@/lib/utils";
 // Only the eyes change between frames.
 
 function build(eyes: string): string {
-  return [
-    "  ███████",
-    eyes,
-    "  ███████",
-  ].join("\n");
+  return ["  ███████", eyes, "  ███████"].join("\n");
 }
 
 const IDLE = build(" ██ ███ ██");

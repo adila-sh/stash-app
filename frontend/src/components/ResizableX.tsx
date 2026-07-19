@@ -12,14 +12,7 @@ interface Props {
   className?: string;
 }
 
-export function ResizableX({
-  storageKey,
-  defaultWidth,
-  min,
-  max,
-  children,
-  className,
-}: Props) {
+export function ResizableX({ storageKey, defaultWidth, min, max, children, className }: Props) {
   const [width, setWidth] = useState<number>(() => {
     try {
       const saved = localStorage.getItem(storageKey);

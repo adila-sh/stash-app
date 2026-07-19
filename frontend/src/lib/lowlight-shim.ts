@@ -66,12 +66,15 @@ type Node = {
 
 export const processAST = (ast: { children: Node[] }) => {
   let lineNumber = 1;
-  const syntaxObj: Record<number, {
-    value: string;
-    lineNumber: number;
-    valueLength: number;
-    nodeList: { node: Node; wrapper?: Node }[];
-  }> = {};
+  const syntaxObj: Record<
+    number,
+    {
+      value: string;
+      lineNumber: number;
+      valueLength: number;
+      nodeList: { node: Node; wrapper?: Node }[];
+    }
+  > = {};
 
   const loopAST = (nodes: Node[], wrapper?: Node) => {
     nodes.forEach((node) => {

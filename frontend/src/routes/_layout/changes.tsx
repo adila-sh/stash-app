@@ -35,12 +35,7 @@ function ChangesView() {
 
   return (
     <>
-      <ResizableX
-        storageKey="stash:sidebar-width:changes"
-        defaultWidth={320}
-        min={220}
-        max={560}
-      >
+      <ResizableX storageKey="stash:sidebar-width:changes" defaultWidth={320} min={220} max={560}>
         <ChangesPanel
           status={status}
           selected={selectedFile}

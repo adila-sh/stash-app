@@ -110,8 +110,7 @@ export const git = {
   stage: (repoPath: string, file: string) => call<void>("StageFile", repoPath, file),
   unstage: (repoPath: string, file: string) => call<void>("UnstageFile", repoPath, file),
   stageFiles: (repoPath: string, files: string[]) => call<void>("StageFiles", repoPath, files),
-  unstageFiles: (repoPath: string, files: string[]) =>
-    call<void>("UnstageFiles", repoPath, files),
+  unstageFiles: (repoPath: string, files: string[]) => call<void>("UnstageFiles", repoPath, files),
   discardFiles: (repoPath: string, tracked: string[], untracked: string[]) =>
     call<void>("DiscardFiles", repoPath, tracked, untracked),
   commit: (repoPath: string, message: string, name = "", email = "") =>
@@ -123,8 +122,7 @@ export const git = {
   commitDiff: (repoPath: string, hash: string) =>
     call<CommitDiffResult>("CommitDiff", repoPath, hash),
   pickRepoFolder: () => call<string>("PickRepoFolder"),
-  checkout: (repoPath: string, branch: string) =>
-    call<void>("Checkout", repoPath, branch),
+  checkout: (repoPath: string, branch: string) => call<void>("Checkout", repoPath, branch),
   createBranch: (repoPath: string, name: string, checkout: boolean) =>
     call<void>("CreateBranch", repoPath, name, checkout),
   push: (repoPath: string, branch: string) => call<void>("Push", repoPath, branch),

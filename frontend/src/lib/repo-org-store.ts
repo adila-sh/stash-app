@@ -82,9 +82,7 @@ export const useRepoOrgStore = create<RepoOrgState>()((set, get) => ({
 
   togglePin: (path) =>
     set((s) => ({
-      pinned: s.pinned.includes(path)
-        ? s.pinned.filter((p) => p !== path)
-        : [...s.pinned, path],
+      pinned: s.pinned.includes(path) ? s.pinned.filter((p) => p !== path) : [...s.pinned, path],
     })),
 
   isPinned: (path) => get().pinned.includes(path),
@@ -102,9 +100,7 @@ export const useRepoOrgStore = create<RepoOrgState>()((set, get) => ({
 
   renameCollection: (id, name) =>
     set((s) => ({
-      collections: s.collections.map((c) =>
-        c.id === id ? { ...c, name: name.trim() } : c,
-      ),
+      collections: s.collections.map((c) => (c.id === id ? { ...c, name: name.trim() } : c)),
     })),
 
   deleteCollection: (id) =>
@@ -114,9 +110,7 @@ export const useRepoOrgStore = create<RepoOrgState>()((set, get) => ({
         if (cid === id) delete nextAssignments[path];
       }
       return {
-        collections: s.collections
-          .filter((c) => c.id !== id)
-          .map((c, i) => ({ ...c, order: i })),
+        collections: s.collections.filter((c) => c.id !== id).map((c, i) => ({ ...c, order: i })),
         assignments: nextAssignments,
       };
     }),

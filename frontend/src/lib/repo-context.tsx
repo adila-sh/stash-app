@@ -152,7 +152,10 @@ export function RepoProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!hydrated) return;
     void config
-      .set(CONFIG_KEYS.repoPaths, repos.map((r) => r.path))
+      .set(
+        CONFIG_KEYS.repoPaths,
+        repos.map((r) => r.path),
+      )
       .catch(() => undefined);
   }, [repos, hydrated]);
 
@@ -429,7 +432,10 @@ export function RepoProvider({ children }: { children: ReactNode }) {
   const stageMany = useCallback(
     async (files: FileChange[]) => {
       if (!activePath || files.length === 0) return;
-      await git.stageFiles(activePath, files.map((f) => f.path));
+      await git.stageFiles(
+        activePath,
+        files.map((f) => f.path),
+      );
       await refreshStatus(activePath);
     },
     [activePath, refreshStatus],
@@ -438,7 +444,10 @@ export function RepoProvider({ children }: { children: ReactNode }) {
   const unstageMany = useCallback(
     async (files: FileChange[]) => {
       if (!activePath || files.length === 0) return;
-      await git.unstageFiles(activePath, files.map((f) => f.path));
+      await git.unstageFiles(
+        activePath,
+        files.map((f) => f.path),
+      );
       await refreshStatus(activePath);
     },
     [activePath, refreshStatus],

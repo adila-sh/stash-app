@@ -1,0 +1,98 @@
+import "@testing-library/jest-dom/vitest";
+import { cleanup } from "@testing-library/react";
+import { afterEach, beforeEach, vi } from "vitest";
+
+import { wailsMock } from "./mocks/wails";
+
+vi.mock("@tanstack/react-router-devtools", () => ({
+  TanStackRouterDevtools: () => null,
+}));
+
+vi.mock("framer-motion", async () => {
+  const React = await import("react");
+  const components = new Map<string, React.ComponentType<Record<string, unknown>>>();
+  const motionProps = new Set([
+    "animate",
+    "exit",
+    "initial",
+    "layout",
+    "layoutId",
+    "transition",
+    "whileHover",
+    "whileTap",
+  ]);
+  const motion = new Proxy(
+    {},
+    {
+      get: (_, tag: string) => {
+        if (!components.has(tag)) {
+          components.set(
+            tag,
+            React.forwardRef<HTMLElement, Record<string, unknown>>((props, ref) => {
+              const domProps = Object.fromEntries(
+                Object.entries(props).filter(([key]) => !motionProps.has(key)),
+              );
+              return React.createElement(tag, { ...domProps, ref });
+            }),
+          );
+        }
+        return components.get(tag);
+      },
+    },
+  );
+
+  return {
+    AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
+    MotionConfig: ({ children }: { children: React.ReactNode }) => children,
+    motion,
+  };
+});
+
+class ResizeObserverMock implements ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+Object.defineProperty(window, "matchMedia", {
+  configurable: true,
+  value: vi.fn().mockImplementation((query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+});
+
+Object.defineProperty(window, "ResizeObserver", {
+  configurable: true,
+  value: ResizeObserverMock,
+});
+
+Object.defineProperty(Element.prototype, "scrollIntoView", {
+  configurable: true,
+  value: vi.fn(),
+});
+
+Object.defineProperty(Element.prototype, "getAnimations", {
+  configurable: true,
+  value: vi.fn(() => []),
+});
+
+Object.defineProperty(window, "scrollTo", {
+  configurable: true,
+  value: vi.fn(),
+});
+
+beforeEach(() => {
+  wailsMock.state.repoPaths = [];
+  localStorage.clear();
+});
+
+afterEach(() => {
+  cleanup();
+});

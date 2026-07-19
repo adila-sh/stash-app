@@ -84,10 +84,7 @@ export function PopoverMenu({ trigger, children, align = "right", className }: P
               left: pos?.left ?? -9999,
               visibility: pos ? "visible" : "hidden",
             }}
-            className={cn(
-              "z-50 min-w-44 border border-border bg-card shadow-lg",
-              className,
-            )}
+            className={cn("z-50 min-w-44 border border-border bg-card shadow-lg", className)}
           >
             {children(() => setOpen(false))}
           </div>,

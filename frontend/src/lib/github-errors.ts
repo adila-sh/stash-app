@@ -43,7 +43,8 @@ export function describeGithubError(e: unknown): GithubErrorInfo {
 
   if (/Not Found/i.test(raw) && /404/i.test(raw)) {
     return {
-      message: "Recurso não encontrado no GitHub (404). O repositório pode ser privado ou ter sido movido.",
+      message:
+        "Recurso não encontrado no GitHub (404). O repositório pode ser privado ou ter sido movido.",
     };
   }
 

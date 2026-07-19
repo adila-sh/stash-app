@@ -179,9 +179,14 @@ export const github = {
     title: string,
     body: string,
   ) =>
-    GitHubAPI.CreatePullRequest(owner, repo, base, head, title, body) as unknown as Promise<
-      PullRequestInfo
-    >,
+    GitHubAPI.CreatePullRequest(
+      owner,
+      repo,
+      base,
+      head,
+      title,
+      body,
+    ) as unknown as Promise<PullRequestInfo>,
   listPullRequests: (owner: string, repo: string, state: "open" | "closed" | "all" = "open") =>
     GitHubAPI.ListPullRequests(owner, repo, state) as unknown as Promise<PullRequestSummary[]>,
   getPullRequest: (owner: string, repo: string, number: number) =>
@@ -203,7 +208,9 @@ export const github = {
   listPullRequestFiles: (owner: string, repo: string, number: number) =>
     GitHubAPI.ListPullRequestFiles(owner, repo, number) as unknown as Promise<PullRequestFile[]>,
   listPullRequestCommits: (owner: string, repo: string, number: number) =>
-    GitHubAPI.ListPullRequestCommits(owner, repo, number) as unknown as Promise<PullRequestCommit[]>,
+    GitHubAPI.ListPullRequestCommits(owner, repo, number) as unknown as Promise<
+      PullRequestCommit[]
+    >,
   createReview: (
     owner: string,
     repo: string,
@@ -212,9 +219,14 @@ export const github = {
     body: string,
     comments: ReviewCommentInput[],
   ) =>
-    GitHubAPI.CreateReview(owner, repo, number, event, body, comments) as unknown as Promise<
-      PullRequestReview
-    >,
+    GitHubAPI.CreateReview(
+      owner,
+      repo,
+      number,
+      event,
+      body,
+      comments,
+    ) as unknown as Promise<PullRequestReview>,
   createReviewComment: (
     owner: string,
     repo: string,
@@ -242,7 +254,11 @@ export const github = {
     inReplyTo: number,
     body: string,
   ) =>
-    GitHubAPI.ReplyToReviewComment(owner, repo, number, inReplyTo, body) as unknown as Promise<
-      ReviewComment
-    >,
+    GitHubAPI.ReplyToReviewComment(
+      owner,
+      repo,
+      number,
+      inReplyTo,
+      body,
+    ) as unknown as Promise<ReviewComment>,
 };
