@@ -51,6 +51,13 @@ function DropdownMenuGroup({ ...props }: MenuPrimitive.Group.Props) {
   return <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
 }
 
+/**
+ * Rótulo semântico de um grupo de itens.
+ *
+ * Deve ser renderizado dentro de `DropdownMenuGroup` ou
+ * `DropdownMenuRadioGroup`. O Base UI lança o erro #31 quando o label é usado
+ * diretamente em `DropdownMenuContent`.
+ */
 function DropdownMenuLabel({
   className,
   inset,
@@ -76,7 +83,7 @@ function DropdownMenuItem({
   inset,
   variant = "default",
   ...props
-}: MenuPrimitive.Item.Props & {
+}: Omit<MenuPrimitive.Item.Props, "onSelect"> & {
   inset?: boolean;
   variant?: "default" | "destructive";
 }) {
@@ -111,10 +118,7 @@ function DropdownMenuSubTrigger({
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
       className={cn(
-        // Divergência consciente do registry ds.adila.co: ele estilizava também data-open, mas o
-        // Base UI (MenuSubmenuTriggerDataAttributes) só emite data-popup-open no próprio trigger —
-        // data-open nunca aparece nesse elemento e o seletor era morto. Removido.
-        "flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:pl-7 data-popup-open:bg-accent data-popup-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:pl-7 data-popup-open:bg-accent data-popup-open:text-accent-foreground data-open:bg-accent data-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
