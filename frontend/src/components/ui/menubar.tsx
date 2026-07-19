@@ -47,11 +47,7 @@ function MenubarTrigger({ className, ...props }: React.ComponentProps<typeof Dro
     <DropdownMenuTrigger
       data-slot="menubar-trigger"
       className={cn(
-        // Divergência consciente do registry ds.adila.co: ele usava aria-expanded, resquício de
-        // Radix (que gerenciava esse atributo automaticamente). O Menu.Trigger do Base UI nunca
-        // define aria-expanded — só aria-haspopup/aria-controls — então o seletor nunca casava e
-        // o trigger não destacava quando o menu abria. O hook real é data-popup-open.
-        "flex items-center rounded-sm px-1.5 py-[2px] text-sm font-medium outline-hidden select-none hover:bg-muted data-popup-open:bg-muted",
+        "flex items-center rounded-sm px-1.5 py-[2px] text-sm font-medium outline-hidden select-none hover:bg-muted aria-expanded:bg-muted",
         className,
       )}
       {...props}
@@ -225,10 +221,7 @@ function MenubarSubTrigger({
       data-slot="menubar-sub-trigger"
       data-inset={inset}
       className={cn(
-        // Divergência consciente do registry ds.adila.co: mesmo bug já corrigido no
-        // DropdownMenuSubTrigger vizinho — o Base UI (MenuSubmenuTriggerDataAttributes) só emite
-        // data-popup-open neste elemento, nunca data-open, e o seletor era morto.
-        "gap-1.5 rounded-md px-1.5 py-1 text-sm focus:bg-accent focus:text-accent-foreground data-inset:pl-7 data-popup-open:bg-accent data-popup-open:text-accent-foreground [&_svg:not([class*='size-'])]:size-4",
+        "gap-1.5 rounded-md px-1.5 py-1 text-sm focus:bg-accent focus:text-accent-foreground data-inset:pl-7 data-open:bg-accent data-open:text-accent-foreground [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
