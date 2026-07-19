@@ -5,6 +5,11 @@ import { afterEach, beforeEach, vi } from "vitest";
 import { githubMock } from "./mocks/github";
 import { wailsMock } from "./mocks/wails";
 
+const TEST_ADILA_SESSION = {
+  session: { expiresAt: "2999-01-01T00:00:00.000Z" },
+  user: { id: "test-user", email: "test@adila.co", name: "Test User" },
+};
+
 vi.mock("@tanstack/react-router-devtools", () => ({
   TanStackRouterDevtools: () => null,
 }));
@@ -105,6 +110,7 @@ beforeEach(async () => {
     sidebarCollapsed: false,
   });
   localStorage.clear();
+  localStorage.setItem("stash:adila-session", JSON.stringify(TEST_ADILA_SESSION));
 });
 
 afterEach(() => {
